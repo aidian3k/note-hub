@@ -1,0 +1,34 @@
+keycloak-initializer:
+  realm-name: app
+  client-id: admin-cli
+  username: root
+  password: root
+  server-url: http://keycloak:8080
+
+  resteasy:
+    connection-pool-size: 10
+    connection-time-out: 10000
+    read-time-out: 10000
+
+  clients:
+    clients:
+      - id: frontend
+        redirect-url: http://localhost:3000/*
+
+  users:
+    users:
+      - username: adrian
+        password: root
+        roles:
+          - ADMIN
+      - username: adrian-user
+        password: user
+        roles:
+          - USER
+
+logging:
+  level:
+    project.ee.keycloak-initializer: debug
+
+server:
+  port: 8082

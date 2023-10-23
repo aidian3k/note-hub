@@ -1,0 +1,18 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/app
+          jwk-set-uri: http://localhost:8080/realms/app/protocol/openid-connect/certs
+  datasource:
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+server:
+  port: 8082
