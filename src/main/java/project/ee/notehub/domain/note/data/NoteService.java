@@ -3,9 +3,12 @@ package project.ee.notehub.domain.note.data;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import project.ee.notehub.domain.note.dto.CreateNoteDTO;
+import project.ee.notehub.domain.note.dto.NoteDTO;
 import project.ee.notehub.domain.note.entity.Note;
+import project.ee.notehub.domain.note.mapper.NoteMapper;
 import project.ee.notehub.domain.user.data.CurrentUserService;
 import project.ee.notehub.infrastructure.exception.note.NoteNotFoundException;
 
@@ -16,16 +19,20 @@ public class NoteService {
 
 	private final NoteRepository noteRepository;
 	private final CurrentUserService currentUserService;
+	private final NoteMapper noteMapper;
 
-	public List<Note> getAllNotes() {
-		return noteRepository.findAllByUserId(
-			currentUserService.getCurrentUserEmbeddedId()
-		);
+	public List<NoteDTO> getAllNotes() {
+		return noteRepository
+			.findAllByUserId(currentUserService.getCurrentUserEmbeddedId())
+			.stream()
+			.map(noteMapper::toDto)
+			.toList();
 	}
 
-	public Note getNoteById(Long noteId) {
+	public NoteDTO getNoteById(Long noteId) {
 		return noteRepository
 			.findByIdAndUserId(noteId, currentUserService.getCurrentUserEmbeddedId())
+			.map(noteMapper::toDto)
 			.orElseThrow(() ->
 				new NoteNotFoundException(
 					String.format("Note with id=[%d] cannot be found", noteId)
@@ -33,12 +40,13 @@ public class NoteService {
 			);
 	}
 
-	public Note getNoteByTitle(String title) {
+	public NoteDTO getNoteByTitle(String title) {
 		return noteRepository
 			.findByTitleAndUserId(
 				title,
 				currentUserService.getCurrentUserEmbeddedId()
 			)
+			.map(noteMapper::toDto)
 			.orElseThrow(() ->
 				new NoteNotFoundException(
 					String.format("Note with title=[%s] cannot be found", title)
@@ -78,6 +86,10 @@ public class NoteService {
 	}
 
 	public void deleteNoteById(Long noteId) {
-		noteRepository.delete(getNoteById(noteId));
+		Note note = noteRepository
+			.findByIdAndUserId(noteId, currentUserService.getCurrentUserEmbeddedId())
+			.orElseThrow(() -> new NoteNotFoundException("Note has not been found!"));
+
+		noteRepository.delete(note);
 	}
 }

@@ -1,0 +1,47 @@
+<div
+	class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-gray-900"
+>
+	<a href="/" class="flex items-center mb-6 text-2xl font-semibold text-white gap-3">
+		<mat-icon color="primary">note</mat-icon>
+		NoteHub
+	</a>
+	<div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+		<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+			<h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
+				Sign in to your account
+			</h1>
+			<form class="space-y-4 md:space-y-6" [formGroup]="formGroup" (ngSubmit)="loginUser()">
+				<div class="flex flex-col gap-2">
+					<mat-form-field>
+						<mat-label>Username</mat-label>
+						<input class="w-full" matInput formControlName="username" />
+						<mat-error *ngIf="formGroup.get('username')?.hasError('required')">
+							Username field is required
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Password</mat-label>
+						<input class="w-full" matInput formControlName="password" />
+						<mat-error *ngIf="formGroup.get('password')?.hasError('required')">
+							Password field is required
+						</mat-error>
+					</mat-form-field>
+				</div>
+
+				<button
+					type="submit"
+					mat-raised-button
+					color="primary"
+					class="w-full"
+					[disabled]="!formGroup.valid"
+				>
+					Sign in
+				</button>
+				<p class="text-sm font-light text-gray-400">
+					Don’t have an account yet?
+					<a routerLink="/register" class="font-medium hover:underline text-primary-500">Sign up</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>

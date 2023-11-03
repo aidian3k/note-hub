@@ -12,7 +12,7 @@
       "options": {
         "trailingComma": "none",
         "singleQuote": true,
-        "printWidth": 140,
+        "printWidth": 100,
         "quoteProps": "as-needed",
         "arrowParens": "avoid",
         "useTabs": true

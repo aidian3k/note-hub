@@ -24,10 +24,12 @@ class SecurityConfiguration {
 		HttpSecurity httpSecurity
 	) throws Exception {
 		httpSecurity.csrf(AbstractHttpConfigurer::disable);
+		httpSecurity.cors();
 
-		httpSecurity.authorizeHttpRequests(httpRequest ->
-			httpRequest.anyRequest().authenticated()
-		);
+		httpSecurity.authorizeHttpRequests(httpRequest -> {
+			httpRequest.requestMatchers("api/auth/**").permitAll();
+			httpRequest.anyRequest().authenticated();
+		});
 
 		httpSecurity.oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> {
 				httpSecurityOAuth2ResourceServerConfigurer

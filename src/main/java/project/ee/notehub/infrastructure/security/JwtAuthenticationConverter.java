@@ -2,6 +2,7 @@ package project.ee.notehub.infrastructure.security;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,13 +55,19 @@ class JwtAuthenticationConverter
 			ROLES,
 			Collections.emptyList()
 		);
+
 		Map<String, Object> resourceAccess = (Map<String, Object>) source
 			.getClaims()
 			.getOrDefault(RESOURCE_ACCESS, Map.of());
-		List<String> resourceRoles = (List<String>) resourceAccess.getOrDefault(
-			"my-backend-client",
-			Collections.emptyList()
-		);
+		List<String> resourceRoles =
+			(
+				(List<String>) (
+					(Map<String, Object>) resourceAccess.getOrDefault(
+						"backend-client",
+						Map.of()
+					)
+				).getOrDefault(ROLES, Collections.emptyList())
+			);
 
 		return Stream
 			.concat(realmRoles.stream(), resourceRoles.stream())

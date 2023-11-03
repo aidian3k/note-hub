@@ -1,7 +1,7 @@
 spring:
   security:
     oauth2:
-      resourceserver:
+      resource-server:
         jwt:
           issuer-uri: http://localhost:8080/realms/app
           jwk-set-uri: http://localhost:8080/realms/app/protocol/openid-connect/certs
@@ -13,6 +13,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+keycloak:
+  realm: app
+  auth-server-url: http://localhost:8080
+  resource: backend-client
+  credentials:
+    secret: k7LCecIUFVlbSagjIxAv1xOjt4RL3iI8
+  bearer-only: true
+  use-resource-role-mappings: true
 
 server:
   port: 8082

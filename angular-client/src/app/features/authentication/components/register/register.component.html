@@ -1,0 +1,84 @@
+<div
+	class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-gray-900"
+>
+	<a href="/" class="flex items-center mb-6 text-2xl font-semibold text-white gap-3">
+		<mat-icon color="primary">note</mat-icon>
+		NoteHub
+	</a>
+	<div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+		<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+			<h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
+				Create new account
+			</h1>
+			<form class="space-y-4 md:space-y-6" [formGroup]="formGroup" (ngSubmit)="registerUser()">
+				<div class="flex flex-col gap-2">
+					<mat-form-field>
+						<mat-label>Email</mat-label>
+						<input matInput formControlName="email" />
+						<mat-error *ngIf="formGroup.get('email')?.hasError('required')">
+							This field is required
+						</mat-error>
+						<mat-error *ngIf="formGroup.get('email')?.hasError('pattern')">
+							Provide valid email
+						</mat-error>
+					</mat-form-field>
+
+					<mat-form-field>
+						<mat-label>Password</mat-label>
+						<input matInput type="password" formControlName="password" />
+						<mat-error *ngIf="formGroup.get('password')?.hasError('required')">
+							This field is required
+						</mat-error>
+					</mat-form-field>
+
+					<mat-form-field>
+						<mat-label>Confirm password</mat-label>
+						<input matInput type="password" formControlName="confirmationPassword" />
+					</mat-form-field>
+					<div class="flex gap-2 w-full justify-center">
+						<mat-form-field>
+							<mat-label>Username</mat-label>
+							<input matInput formControlName="firstName" />
+							<mat-error *ngIf="formGroup.get('firstName')?.hasError('required')">
+								This field is required
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-label>Name</mat-label>
+							<input matInput formControlName="lastName" />
+							<mat-error *ngIf="formGroup.get('lastName')?.hasError('required')">
+								This field is required
+							</mat-error>
+						</mat-form-field>
+					</div>
+					<div class="flex justify-center items-center">
+						<mat-form-field>
+							<mat-label>Choose a birthday date</mat-label>
+							<input matInput [matDatepicker]="picker" formControlName="birthdayDate" />
+							<mat-hint>MM/DD/YYYY</mat-hint>
+							<mat-datepicker #picker></mat-datepicker>
+							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+							<mat-error *ngIf="formGroup.get('birthdayDate')?.hasError('required')">
+								This field is required
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<button
+					type="submit"
+					mat-raised-button
+					color="primary"
+					class="w-full"
+					[disabled]="!formGroup.valid"
+				>
+					Register
+				</button>
+				<p class="text-sm font-light text-gray-400">
+					Already have an account?
+					<a routerLink="/login" class="font-medium hover:underline text-primary-500">Sign in</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>

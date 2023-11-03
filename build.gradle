@@ -35,10 +35,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	// MapStruct and Lombok
+	compileOnly 'org.mapstruct:mapstruct:1.5.3.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -46,6 +49,8 @@ dependencies {
 	testImplementation 'org.testcontainers:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.0.5'
 	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '6.1.5'
+	implementation 'org.keycloak:keycloak-spring-boot-starter:22.0.1'
+	implementation 'org.keycloak:keycloak-admin-client:22.0.1'
 }
 
 dependencyManagement {
