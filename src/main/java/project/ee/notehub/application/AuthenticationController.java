@@ -1,5 +1,8 @@
 package project.ee.notehub.application;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -39,5 +42,14 @@ class AuthenticationController {
 			userFacade.authenticateUser(userLoginRequest),
 			HttpStatus.OK
 		);
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<Void> logoutUser(
+		@NonNull HttpServletRequest request,
+		@NonNull HttpServletResponse response
+	) {
+		this.userFacade.logoutUser(request, response);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

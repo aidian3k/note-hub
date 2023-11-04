@@ -1,9 +1,12 @@
 package project.ee.notehub.domain.user.data;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import project.ee.notehub.domain.user.dto.KeycloakLoginRequest;
 import project.ee.notehub.domain.user.dto.UserLoginRequest;
 import project.ee.notehub.domain.user.dto.UserLoginResponse;
 import project.ee.notehub.domain.user.dto.UserRegistrationRequest;
@@ -24,5 +27,13 @@ public class UserFacade {
 
 	public UserLoginResponse authenticateUser(UserLoginRequest userLoginRequest) {
 		return userLoginService.handleUserLogin(userLoginRequest);
+	}
+
+	public void logoutUser(
+		HttpServletRequest request,
+		HttpServletResponse response
+	) {
+		response.setStatus(HttpStatus.OK.value());
+		SecurityContextHolder.clearContext();
 	}
 }
