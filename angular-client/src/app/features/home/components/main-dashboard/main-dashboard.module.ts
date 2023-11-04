@@ -12,6 +12,10 @@ import { CreateNoteModalComponent } from './create-note-modal/create-note-modal.
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DeleteNoteModalComponent } from './delete-note-modal/delete-note-modal.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { MatCardModule } from '@angular/material/card';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
 	declarations: [
@@ -20,7 +24,10 @@ import { DeleteNoteModalComponent } from './delete-note-modal/delete-note-modal.
 		SelectTagComponent,
 		NoteComponent,
 		CreateNoteModalComponent,
-		DeleteNoteModalComponent
+		DeleteNoteModalComponent,
+		AboutUsComponent,
+		ContactUsComponent,
+		ProfileComponent
 	],
 	imports: [
 		CommonModule,
@@ -29,7 +36,8 @@ import { DeleteNoteModalComponent } from './delete-note-modal/delete-note-modal.
 		MatIconModule,
 		MatSelectModule,
 		MatDialogModule,
-		MatButtonModule
+		MatButtonModule,
+		MatCardModule
 	]
 })
 export class MainDashboardModule {}
