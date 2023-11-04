@@ -6,8 +6,8 @@
 </div>
 <mat-dialog-content>
 	<div class="w-11/2 flex justify-center">
-		<div class="w-full">
-			<div class="my-1">
+		<form class="w-full" [formGroup]="formGroup">
+			<form class="my-1">
 				<label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
 					>Note's title</label
 				>
@@ -17,18 +17,37 @@
 					class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					placeholder="Some title"
 					required
+					formControlName="title"
 				/>
-			</div>
+				<div class="flex gap-2">
+					<mat-error
+						*ngIf="
+							!!formGroup.get('title')?.touched && formGroup.get('title')?.hasError('required')
+						"
+						>This field is required</mat-error
+					>
+					<mat-error *ngIf="formGroup.get('title')?.hasError('max-length')"
+						>The value is too long</mat-error
+					>
+				</div>
+			</form>
 			<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-				>Note content</label
+				>Note's content</label
 			>
 			<textarea
 				id="message"
 				rows="11"
 				class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 				placeholder="Write your thoughts here..."
+				formControlName="content"
 			></textarea>
-		</div>
+			<mat-error
+				*ngIf="
+					!!formGroup.get('content')?.touched && formGroup.get('content')?.hasError('required')
+				"
+				>This field is required</mat-error
+			>
+		</form>
 	</div>
 </mat-dialog-content>
 <mat-dialog-actions>

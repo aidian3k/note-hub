@@ -17,6 +17,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { MatCardModule } from '@angular/material/card';
 import { ProfileComponent } from './profile/profile.component';
 import { NoteReadComponent } from './note-read/note-read.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -39,7 +41,9 @@ import { NoteReadComponent } from './note-read/note-read.component';
 		MatSelectModule,
 		MatDialogModule,
 		MatButtonModule,
-		MatCardModule
+		MatCardModule,
+		ReactiveFormsModule,
+		HttpClientModule
 	]
 })
 export class MainDashboardModule {}

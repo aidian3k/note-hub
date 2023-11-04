@@ -17,8 +17,8 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 		const accessToken: string | null = localStorage.getItem('accessToken');
 		const refreshToken: string | null = localStorage.getItem('refreshToken');
 
-		if (accessToken) {
-			request.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } });
+		if (!!accessToken) {
+			request = request.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } });
 		}
 
 		return next.handle(request).pipe(

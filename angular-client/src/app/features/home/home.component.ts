@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateNoteModalComponent } from './components/main-dashboard/create-note-modal/create-note-modal.component';
+import { CreateNoteModalComponent } from './components/create-note-modal/create-note-modal.component';
 import { AuthService } from '../authentication/services/auth.service';
 import { Router } from '@angular/router';
-import { AboutUsComponent } from './components/main-dashboard/about-us/about-us.component';
-import { ContactUsComponent } from './components/main-dashboard/contact-us/contact-us.component';
-import { ProfileComponent } from './components/main-dashboard/profile/profile.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
 	selector: 'app-home',
