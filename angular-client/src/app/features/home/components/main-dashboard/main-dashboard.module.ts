@@ -8,20 +8,28 @@ import { MatIconModule } from '@angular/material/icon';
 import { SelectTagComponent } from './select-tag/select-tag.component';
 import { MatSelectModule } from '@angular/material/select';
 import { NoteComponent } from './note/note.component';
+import { CreateNoteModalComponent } from './create-note-modal/create-note-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { DeleteNoteModalComponent } from './delete-note-modal/delete-note-modal.component';
 
 @NgModule({
 	declarations: [
 		MainDashboardPageComponent,
 		SearchComponentComponent,
 		SelectTagComponent,
-		NoteComponent
+		NoteComponent,
+		CreateNoteModalComponent,
+		DeleteNoteModalComponent
 	],
 	imports: [
 		CommonModule,
 		MainDashboardRoutingModule,
 		MatInputModule,
 		MatIconModule,
-		MatSelectModule
+		MatSelectModule,
+		MatDialogModule,
+		MatButtonModule
 	]
 })
 export class MainDashboardModule {}

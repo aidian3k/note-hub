@@ -63,7 +63,7 @@
 							/>
 						</svg>
 					</app-navbar-button>
-					<app-navbar-button [routeName]="'Create note'">
+					<app-navbar-button [routeName]="'Create note'" (click)="handleCreateNewNote()">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -79,7 +79,7 @@
 							/>
 						</svg>
 					</app-navbar-button>
-					<app-navbar-button [routeName]="'Logout'">
+					<app-navbar-button [routeName]="'Logout'" (click)="logoutUser()">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"

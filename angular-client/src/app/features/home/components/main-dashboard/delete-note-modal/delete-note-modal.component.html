@@ -1,0 +1,17 @@
+<p mat-dialog-title class="text-red-500 text-center text-2xl">Deleting note</p>
+<mat-dialog-content>
+	<p class="text-white text-lg">Are you sure you want to delete this note?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+	<div class="flex gap-2 w-full">
+		<button class="bg-red-800 hover:bg-red-700 transition-all border-1 rounded-2xl py-1 w-full">
+			<span class="text-white font-semibold text-xl">Delete</span>
+		</button>
+		<button
+			mat-dialog-close
+			class="bg-purple-700 hover:bg-purple-500 transition-all border-1 rounded-2xl py-1 w-full"
+		>
+			<span class="text-white font-semibold text-xl">Exit</span>
+		</button>
+	</div>
+</mat-dialog-actions>
