@@ -1,0 +1,16 @@
+<div class="w-full flex justify-center py-3 bg-gray-900">
+	<div class="w-10/12 p-2">
+		<div class="w-full flex items-center justify-between">
+			<p class="text-4xl font-extrabold dark:text-white">My Notes</p>
+			<div class="flex gap-4 justify-self-end">
+				<app-search-component></app-search-component>
+				<app-select-tag></app-select-tag>
+			</div>
+		</div>
+		<div class="grid grid-cols-3 gap-4">
+			<ng-container *ngFor="let i of [1, 2, 3, 4]">
+				<app-note></app-note>
+			</ng-container>
+		</div>
+	</div>
+</div>

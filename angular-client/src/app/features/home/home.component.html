@@ -1,0 +1,135 @@
+<div class="h-screen w-screen bg-gray-900">
+	<nav class="border-gray-200 bg-gray-700">
+		<div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-3 justify-between">
+			<a routerLink="/main" class="flex items-center gap-3">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth="{1.5}"
+					stroke="currentColor"
+					class="w-8 h-8 text-white"
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+					/>
+				</svg>
+
+				<span class="self-center text-2xl font-semibold whitespace-nowrap text-white"
+					>Note hub</span
+				>
+			</a>
+			<button
+				data-collapse-toggle="navbar-default"
+				type="button"
+				class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
+				aria-controls="navbar-default"
+				aria-expanded="false"
+			>
+				<span class="sr-only">Open main menu</span>
+				<svg
+					class="w-5 h-5"
+					aria-hidden="true"
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 17 14"
+				>
+					<path
+						stroke="currentColor"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M1 1h15M1 7h15M1 13h15"
+					/>
+				</svg>
+			</button>
+			<div class="w-full md:block md:w-auto items-center">
+				<div class="flex md:gap-3 sm:gap-2">
+					<app-navbar-button [routeName]="'Profile'">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth="{1.5}"
+							stroke="currentColor"
+							class="w-6 h-6"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+							/>
+						</svg>
+					</app-navbar-button>
+					<app-navbar-button [routeName]="'Create note'">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth="{1.5}"
+							stroke="currentColor"
+							class="w-6 h-6"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+					</app-navbar-button>
+					<app-navbar-button [routeName]="'Logout'">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth="{1.5}"
+							stroke="currentColor"
+							class="w-6 h-6"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+							/>
+						</svg>
+					</app-navbar-button>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<router-outlet></router-outlet>
+	<div class="w-full b-gray-900 border-t flex items-center p-2 bg-gray-900 justify-evenly">
+		<div class="flex gap-2 items-center justify-center">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				strokeWidth="{1.5}"
+				stroke="currentColor"
+				class="w-8 h-8 text-white"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+				/>
+			</svg>
+			<span class="text-white text-xl font-semibold">Note hub 2023</span>
+		</div>
+
+		<div class="flex gap-4">
+			<button
+				class="bg-purple-700 hover:bg-purple-500 transition-all border-1 rounded-2xl py-2 px-4"
+			>
+				<span class="text-white font-semibold">About us</span>
+			</button>
+			<button
+				class="bg-purple-700 hover:bg-purple-500 transition-all border-1 rounded-2xl py-2 px-4"
+			>
+				<span class="text-white font-semibold">Contact us</span>
+			</button>
+		</div>
+	</div>
+</div>

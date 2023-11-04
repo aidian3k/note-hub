@@ -8,16 +8,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthorizationInterceptor } from './features/authentication/helpers/authorization-interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HomeModule } from './features/home/home.module';
+import { AppRoutingModule } from './app-routing.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
+		AppRoutingModule,
 		AuthModule,
+		HomeModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
 		RouterOutlet,
-		MatDialogModule
+		MatDialogModule,
+		MatButtonModule
 	],
 	bootstrap: [AppComponent],
 	providers: [

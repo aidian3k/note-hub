@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
 				next: (response: UserLoginResponse) => {
 					localStorage.setItem('accessToken', response.access_token);
 					localStorage.setItem('refreshToken', response.refresh_token);
+					this.router.navigate(['/main-dashboard']);
 				},
 				error: (error: HttpErrorResponse) => {
 					if (error.status === HttpStatusCode.Unauthorized) {
