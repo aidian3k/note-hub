@@ -10,6 +10,11 @@ const routes: Routes = [
 	{
 		path: 'main',
 		loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)
+	},
+	{
+		path: '**',
+		loadChildren: () =>
+			import('./features/not-found/not-found-routing.module').then(m => m.NotFoundRoutingModule)
 	}
 ];
 

@@ -3,11 +3,11 @@ package project.ee.notehub.infrastructure.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -43,6 +43,17 @@ class SecurityConfiguration {
 				SessionCreationPolicy.STATELESS
 			)
 		);
+
+		httpSecurity.logout(httpSecurityLogoutConfigurer -> {
+			httpSecurityLogoutConfigurer.addLogoutHandler(
+				(
+					(request, response, authentication) ->
+						response.setStatus(HttpStatus.OK.value())
+				)
+			);
+
+			httpSecurityLogoutConfigurer.logoutUrl("api/auth/logout");
+		});
 
 		return httpSecurity.build();
 	}

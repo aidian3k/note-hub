@@ -11,9 +11,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HomeModule } from './features/home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material/button';
+import { NotFoundComponent } from './features/not-found/not-found.component';
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, NotFoundComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
