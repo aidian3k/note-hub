@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainDashboardPageComponent } from './main-dashboard-page/main-dashboard-page.component';
-import { SearchComponentComponent } from './search-component/search-component.component';
 import { MainDashboardRoutingModule } from './main-dashboard-routing.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { SelectTagComponent } from './select-tag/select-tag.component';
 import { MatSelectModule } from '@angular/material/select';
 import { NoteComponent } from './note/note.component';
 import { CreateNoteModalComponent } from './create-note-modal/create-note-modal.component';
@@ -23,8 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
 	declarations: [
 		MainDashboardPageComponent,
-		SearchComponentComponent,
-		SelectTagComponent,
 		NoteComponent,
 		CreateNoteModalComponent,
 		DeleteNoteModalComponent,

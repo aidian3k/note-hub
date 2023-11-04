@@ -1,10 +1,8 @@
 package project.ee.notehub.application;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +17,8 @@ import project.ee.notehub.domain.note.dto.NoteDTO;
 import project.ee.notehub.domain.note.entity.Note;
 import project.ee.notehub.domain.note.facade.NoteFacade;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -27,7 +27,6 @@ class NoteController {
 	private final NoteFacade noteFacade;
 
 	@GetMapping("/note")
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<NoteDTO>> getAllNotes() {
 		return new ResponseEntity<>(noteFacade.getAllNotes(), HttpStatus.OK);
 	}
@@ -37,10 +36,12 @@ class NoteController {
 		return new ResponseEntity<>(noteFacade.getNoteById(noteId), HttpStatus.OK);
 	}
 
-	@GetMapping("/note/title")
-	public ResponseEntity<NoteDTO> getNoteByTitle(@RequestParam String title) {
+	@GetMapping("/note/search-word")
+	public ResponseEntity<List<NoteDTO>> getNoteByTitle(
+		@RequestParam String searchWord
+	) {
 		return new ResponseEntity<>(
-			noteFacade.getNoteByTitle(title),
+			noteFacade.getNotesBySearchWord(searchWord),
 			HttpStatus.OK
 		);
 	}

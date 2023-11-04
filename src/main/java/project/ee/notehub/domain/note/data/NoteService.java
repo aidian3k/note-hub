@@ -1,9 +1,12 @@
 package project.ee.notehub.domain.note.data;
 
-import java.util.List;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import project.ee.notehub.domain.note.dto.CreateNoteDTO;
 import project.ee.notehub.domain.note.dto.NoteDTO;
@@ -11,6 +14,10 @@ import project.ee.notehub.domain.note.entity.Note;
 import project.ee.notehub.domain.note.mapper.NoteMapper;
 import project.ee.notehub.domain.user.data.CurrentUserService;
 import project.ee.notehub.infrastructure.exception.note.NoteNotFoundException;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,12 +27,14 @@ public class NoteService {
 	private final NoteRepository noteRepository;
 	private final CurrentUserService currentUserService;
 	private final NoteMapper noteMapper;
+	private final EntityManager entityManager;
 
 	public List<NoteDTO> getAllNotes() {
 		return noteRepository
 			.findAllByUserId(currentUserService.getCurrentUserEmbeddedId())
 			.stream()
 			.map(noteMapper::toDto)
+			.sorted(Comparator.comparing(NoteDTO::getModificationDate))
 			.toList();
 	}
 
@@ -40,18 +49,40 @@ public class NoteService {
 			);
 	}
 
-	public NoteDTO getNoteByTitle(String title) {
-		return noteRepository
-			.findByTitleAndUserId(
-				title,
-				currentUserService.getCurrentUserEmbeddedId()
-			)
-			.map(noteMapper::toDto)
-			.orElseThrow(() ->
-				new NoteNotFoundException(
-					String.format("Note with title=[%s] cannot be found", title)
-				)
+	public List<NoteDTO> getNotesBySearchWord(String searchWord) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<NoteDTO> criteriaQuery = criteriaBuilder.createQuery(
+			NoteDTO.class
+		);
+		Root<Note> noteRoot = criteriaQuery.from(Note.class);
+		List<Predicate> predicates = new ArrayList<>();
+
+		if (searchWord != null) {
+			predicates.add(
+				criteriaBuilder.like(noteRoot.get("title"), "%" + searchWord + "%")
 			);
+		}
+
+		criteriaQuery
+			.select(
+				criteriaBuilder.construct(
+					NoteDTO.class,
+					noteRoot.get("id"),
+					noteRoot.get("content"),
+					noteRoot.get("title"),
+					noteRoot.get("modificationDate")
+				)
+			)
+			.where(predicates.toArray(Predicate[]::new));
+
+		List<NoteDTO> resultNoteDTOs = entityManager
+			.createQuery(criteriaQuery)
+			.getResultList();
+
+		return resultNoteDTOs
+			.stream()
+			.sorted(Comparator.comparing(NoteDTO::getModificationDate))
+			.toList();
 	}
 
 	public CreateNoteDTO createNote(CreateNoteDTO note) {

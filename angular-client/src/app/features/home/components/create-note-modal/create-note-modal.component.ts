@@ -31,6 +31,7 @@ export class CreateNoteModalComponent implements OnInit {
 
 		this.noteService.saveNewNote(creationNote).subscribe({
 			next: () => {
+				this.noteService.propagateMainPageChange();
 				this.dialogRef.close();
 				this.snackbar.open('Successfully created new note!', 'Close', snackBarConfig);
 			},

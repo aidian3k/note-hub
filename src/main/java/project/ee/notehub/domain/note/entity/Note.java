@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +19,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
 
 @Entity(name = "notes")
 @Getter
@@ -43,6 +44,7 @@ public class Note {
 	private String title;
 
 	@NotNull
+	@Size(max = 25000)
 	private String content;
 
 	@CreationTimestamp

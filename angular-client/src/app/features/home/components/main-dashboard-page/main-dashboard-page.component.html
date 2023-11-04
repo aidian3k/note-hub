@@ -3,13 +3,23 @@
 		<div class="w-full flex items-center justify-between">
 			<p class="text-4xl font-extrabold dark:text-white">My Notes</p>
 			<div class="flex gap-4 justify-self-end">
-				<app-search-component></app-search-component>
-				<app-select-tag></app-select-tag>
+				<mat-form-field>
+					<mat-label>Search by title</mat-label>
+					<mat-icon matSuffix>search</mat-icon>
+					<input type="text" matInput placeholder="Sample note" (change)="handleSearchWordChange($event)"/>
+				</mat-form-field>
+				<mat-form-field>
+					<mat-label>Tags</mat-label>
+					<mat-select multiple>
+						<mat-option>{{ 'first tag' }}</mat-option>
+						<mat-option>{{ 'second-tag' }}</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
 		</div>
 		<div class="grid grid-cols-3 gap-4">
-			<ng-container *ngFor="let i of [1, 2, 3, 4]">
-				<app-note></app-note>
+			<ng-container *ngFor="let note of userNotes$ | async">
+				<app-note [note]="note"></app-note>
 			</ng-container>
 		</div>
 	</div>
