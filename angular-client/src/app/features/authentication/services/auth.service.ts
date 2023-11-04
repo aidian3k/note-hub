@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/User';
 import { LoginRequest } from '../models/LoginRequest';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { CreationUserRequest } from '../models/CreationUserRequest';
 import { UserLoginResponse } from '../models/UserLoginResponse';
+import { ProfileInfo } from '../../home/models/ProfileInfo';
 
 @Injectable({
 	providedIn: 'root'
@@ -27,6 +28,10 @@ export class AuthService {
 
 	public registerUser(registrationRequest: CreationUserRequest): Observable<number> {
 		return this.httpClient.post<number>(environment.apiUrl + '/auth/register', registrationRequest);
+	}
+
+	public getUserProfileInformation(): Observable<ProfileInfo> {
+		return this.httpClient.get<ProfileInfo>(environment.apiUrl + '/profile');
 	}
 
 	public cleanUpUser(): void {
