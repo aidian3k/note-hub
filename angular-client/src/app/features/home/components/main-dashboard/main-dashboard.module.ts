@@ -16,6 +16,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { MatCardModule } from '@angular/material/card';
 import { ProfileComponent } from './profile/profile.component';
+import { NoteReadComponent } from './note-read/note-read.component';
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,8 @@ import { ProfileComponent } from './profile/profile.component';
 		DeleteNoteModalComponent,
 		AboutUsComponent,
 		ContactUsComponent,
-		ProfileComponent
+		ProfileComponent,
+		NoteReadComponent
 	],
 	imports: [
 		CommonModule,

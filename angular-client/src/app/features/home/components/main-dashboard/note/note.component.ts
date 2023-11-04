@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteNoteModalComponent } from '../delete-note-modal/delete-note-modal.component';
+import { NoteReadComponent } from '../note-read/note-read.component';
 
 @Component({
 	selector: 'app-note',
@@ -13,5 +14,9 @@ export class NoteComponent implements OnInit {
 
 	openDeleteDialog() {
 		this.dialog.open(DeleteNoteModalComponent);
+	}
+
+	openNoteReadDialog() {
+		this.dialog.open(NoteReadComponent, { width: '600px' });
 	}
 }
