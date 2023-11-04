@@ -7,7 +7,7 @@ import { ProfileInfo } from '../../models/ProfileInfo';
 	templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-	profile: ProfileInfo;
+	profile?: ProfileInfo;
 	constructor(private authService: AuthService) {}
 
 	ngOnInit(): void {

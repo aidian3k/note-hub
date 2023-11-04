@@ -44,6 +44,16 @@ class AuthenticationController {
 		);
 	}
 
+	@PostMapping("/refresh-token")
+	public ResponseEntity<UserLoginResponse> handleRefreshToken(
+		@RequestBody String refreshToken
+	) {
+		return new ResponseEntity<>(
+			userFacade.handleRefreshToken(refreshToken),
+			HttpStatus.OK
+		);
+	}
+
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logoutUser(
 		@NonNull HttpServletRequest request,

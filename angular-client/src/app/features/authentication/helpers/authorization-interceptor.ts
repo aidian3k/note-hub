@@ -6,7 +6,7 @@ import {
 	HttpInterceptor,
 	HttpRequest
 } from '@angular/common/http';
-import { noop, Observable, tap } from 'rxjs';
+import { catchError, Observable, switchMap, take, tap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -15,31 +15,32 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 	constructor(private router: Router, private authService: AuthService) {}
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		const accessToken: string | null = localStorage.getItem('accessToken');
-		const refreshToken: string | null = localStorage.getItem('refreshToken');
 
-		if (!!accessToken) {
+		if (accessToken) {
 			request = request.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } });
 		}
 
 		return next.handle(request).pipe(
-			tap({
-				next: noop,
-				error: (error: HttpErrorResponse) => {
-					if (error.status === 401) {
-						if (!!refreshToken) {
-							this.handleRefreshTokenCall(refreshToken);
-							return;
-						}
-
-						this.handleAuthenticationError();
-					}
+			catchError(error => {
+				if (error instanceof HttpErrorResponse && error.status === 401) {
+					return this.handleRefreshTokenCall(error, request, next);
+				} else {
+					this.handleAuthenticationError();
+					return throwError(error);
 				}
 			})
 		);
 	}
 
-	private handleRefreshTokenCall(refreshToken: string): void {
-		this.authService.makeCallWithRefreshToken(refreshToken).pipe(
+	private handleRefreshTokenCall(err: any, request: HttpRequest<any>, next: HttpHandler) {
+		const refreshToken = localStorage.getItem('refreshToken');
+
+		if (!refreshToken) {
+			this.handleAuthenticationError();
+			return throwError(err);
+		}
+
+		return this.authService.makeCallWithRefreshToken(refreshToken).pipe(
 			tap({
 				next: response => {
 					localStorage.setItem('accessToken', response.accessToken);
@@ -49,6 +50,14 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 					this.handleAuthenticationError();
 					console.log(error);
 				}
+			}),
+			take(1),
+			switchMap(response => {
+				request = request.clone({
+					setHeaders: { Authorization: `Bearer ${response.accessToken}` }
+				});
+
+				return next.handle(request);
 			})
 		);
 	}

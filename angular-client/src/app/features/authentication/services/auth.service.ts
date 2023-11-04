@@ -35,6 +35,8 @@ export class AuthService {
 	}
 
 	public cleanUpUser(): void {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
 		this.currentUser$.next(null);
 	}
 
@@ -51,8 +53,9 @@ export class AuthService {
 	}
 
 	public makeCallWithRefreshToken(refreshToken: string): Observable<RefreshTokenResponse> {
-		return this.httpClient.post<RefreshTokenResponse>(environment.apiUrl + '/auth/refresh-token', {
-			refreshToken: refreshToken
-		});
+		return this.httpClient.post<RefreshTokenResponse>(
+			environment.apiUrl + '/auth/refresh-token',
+			refreshToken
+		);
 	}
 }

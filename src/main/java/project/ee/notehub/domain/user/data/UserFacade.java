@@ -18,6 +18,7 @@ public class UserFacade {
 
 	private final UserRegistrationService userRegistrationService;
 	private final UserLoginService userLoginService;
+	private final UserRefreshTokenManagementService userRefreshTokenManagementService;
 
 	public int registerUser(UserRegistrationRequest userRegistrationRequest) {
 		return userRegistrationService.registerKeycloakUser(
@@ -35,5 +36,9 @@ public class UserFacade {
 	) {
 		response.setStatus(HttpStatus.OK.value());
 		SecurityContextHolder.clearContext();
+	}
+
+	public UserLoginResponse handleRefreshToken(String refreshToken) {
+		return userRefreshTokenManagementService.handleRefreshToken(refreshToken);
 	}
 }
