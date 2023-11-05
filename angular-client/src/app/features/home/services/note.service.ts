@@ -18,8 +18,15 @@ export class NoteService {
 		return this.httpClient.get<Note[]>(environment.apiUrl + '/note');
 	}
 
+	public getNoteById(noteId: number): Observable<Note> {
+		return this.httpClient.get<Note>(environment.apiUrl + '/note/' + noteId);
+	}
 	public deleteNoteById(noteId: number): Observable<void> {
 		return this.httpClient.delete<void>(environment.apiUrl + '/note/' + noteId);
+	}
+
+	public updateNote(note: Note): Observable<Note> {
+		return this.httpClient.put<Note>(environment.apiUrl + '/note', note);
 	}
 
 	public getNotesBySearchKeyWord(searchWord: string): Observable<Note[]> {

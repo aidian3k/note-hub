@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import project.ee.notehub.domain.note.dto.CreateNoteDTO;
 import project.ee.notehub.domain.note.dto.NoteDTO;
+import project.ee.notehub.domain.note.dto.UpdateNoteDTO;
 import project.ee.notehub.domain.note.entity.Note;
 import project.ee.notehub.domain.note.mapper.NoteMapper;
 import project.ee.notehub.domain.user.data.CurrentUserService;
@@ -98,10 +99,23 @@ public class NoteService {
 		return note;
 	}
 
-	public CreateNoteDTO updateNote(CreateNoteDTO note) {
-		createNote(note);
+	public UpdateNoteDTO updateNote(UpdateNoteDTO updateNoteDTO) {
+		Note foundNote = noteRepository
+			.findByIdAndUserId(
+				updateNoteDTO.getId(),
+				currentUserService.getCurrentUserEmbeddedId()
+			)
+			.orElseThrow(() -> new NoteNotFoundException("Note could not be found!"));
 
-		return note;
+		Note updatedNote = foundNote
+			.toBuilder()
+			.title(updateNoteDTO.getTitle())
+			.content(updateNoteDTO.getContent())
+			.build();
+
+		noteRepository.save(updatedNote);
+
+		return updateNoteDTO;
 	}
 
 	public void deleteNote(Note note) {

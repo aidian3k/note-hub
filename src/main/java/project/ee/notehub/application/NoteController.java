@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project.ee.notehub.domain.note.dto.CreateNoteDTO;
 import project.ee.notehub.domain.note.dto.NoteDTO;
+import project.ee.notehub.domain.note.dto.UpdateNoteDTO;
 import project.ee.notehub.domain.note.entity.Note;
 import project.ee.notehub.domain.note.facade.NoteFacade;
 
@@ -57,8 +58,8 @@ class NoteController {
 	}
 
 	@PutMapping("/note")
-	public ResponseEntity<CreateNoteDTO> updateNote(
-		@RequestBody CreateNoteDTO updatedNote
+	public ResponseEntity<UpdateNoteDTO> updateNote(
+		@RequestBody UpdateNoteDTO updatedNote
 	) {
 		return new ResponseEntity<>(
 			noteFacade.updateNote(updatedNote),

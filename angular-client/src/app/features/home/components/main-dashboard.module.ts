@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NoteReadComponent } from './note-read/note-read.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NoteUpdateComponent } from './note-update/note-update.component';
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
 		AboutUsComponent,
 		ContactUsComponent,
 		ProfileComponent,
-		NoteReadComponent
+		NoteReadComponent,
+		NoteUpdateComponent
 	],
 	imports: [
 		CommonModule,

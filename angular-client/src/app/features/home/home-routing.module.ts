@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { AuthorizationGuard } from '../authentication/helpers/authorization.guard';
 
 const routes: Routes = [
 	{
@@ -12,7 +13,8 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./components/main-dashboard.module').then(m => m.MainDashboardModule)
 			}
-		]
+		],
+		canActivate: [AuthorizationGuard]
 	}
 ];
 

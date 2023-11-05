@@ -1,5 +1,5 @@
 <div class="flex justify-between items-center">
-	<h2 mat-dialog-title>Creating new note</h2>
+	<h2 mat-dialog-title>Updating note</h2>
 	<button mat-icon-button mat-dialog-close color="warn">
 		<mat-icon>close</mat-icon>
 	</button>
@@ -52,10 +52,10 @@
 </mat-dialog-content>
 <mat-dialog-actions>
 	<button
-		(click)="saveNewNote()"
+		(click)="updateNote()"
 		[disabled]="!formGroup.valid"
 		class="bg-purple-700 hover:bg-purple-500 transition-all border-1 rounded-2xl py-1 w-full"
 	>
-		<span class="text-white font-semibold text-xl">Create</span>
+		<span class="text-white font-semibold text-xl">Update</span>
 	</button>
 </mat-dialog-actions>
