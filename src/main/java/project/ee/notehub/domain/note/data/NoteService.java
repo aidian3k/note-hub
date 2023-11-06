@@ -35,7 +35,7 @@ public class NoteService {
 			.findAllByUserId(currentUserService.getCurrentUserEmbeddedId())
 			.stream()
 			.map(noteMapper::toDto)
-			.sorted(Comparator.comparing(NoteDTO::getModificationDate))
+			.sorted(Comparator.comparing(NoteDTO::getModificationDate).reversed())
 			.toList();
 	}
 

@@ -8,8 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-note-update',
-	templateUrl: './note-update.component.html',
-	styleUrls: ['./note-update.component.css']
+	templateUrl: './note-update.component.html'
 })
 export class NoteUpdateComponent implements OnInit {
 	formGroup: FormGroup;

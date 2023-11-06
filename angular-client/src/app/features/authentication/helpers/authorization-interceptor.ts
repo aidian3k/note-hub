@@ -20,12 +20,12 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 	constructor(private router: Router, private authService: AuthService) {}
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-		const accessToken = this.isRefreshing
+		const key = this.isRefreshing
 			? localStorage.getItem('refreshToken')
 			: localStorage.getItem('accessToken');
 
-		if (accessToken) {
-			request = this.addTokenToRequest(accessToken, request);
+		if (key) {
+			request = this.addTokenToRequest(key, request);
 		}
 
 		return next.handle(request).pipe(
@@ -35,7 +35,6 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 
 					return this.refreshUsersTokenIfPossible(request, next);
 				}
-
 				return throwError(error);
 			})
 		);
@@ -48,17 +47,23 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 		if (!this.isRefreshing) {
 			this.isRefreshing = true;
 			this.refreshTokenSubject.next(null);
+			const refreshToken = localStorage.getItem('refreshToken');
 
-			return this.authService
-				.makeCallWithRefreshToken(localStorage.getItem('refreshToken') ?? '')
-				.pipe(
-					switchMap((data: RefreshTokenResponse) => {
-						this.isRefreshing = false;
-						this.refreshTokenSubject.next(data);
+			if (!refreshToken) {
+				this.router.navigateByUrl('/login');
+				return throwError('Refresh token does not exist');
+			}
 
-						return next.handle(this.addTokenToRequest(data.accessToken, request));
-					})
-				);
+			return this.authService.makeCallWithRefreshToken(refreshToken).pipe(
+				switchMap((data: RefreshTokenResponse) => {
+					this.isRefreshing = false;
+					this.refreshTokenSubject.next(data.accessToken);
+					localStorage.setItem('accessToken', data.accessToken);
+					localStorage.setItem('refreshToken', data.accessToken);
+
+					return next.handle(this.addTokenToRequest(data.accessToken, request));
+				})
+			);
 		}
 
 		return this.refreshTokenSubject.pipe(
@@ -66,10 +71,6 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 			take(1),
 			switchMap((authToken: string) => {
 				return next.handle(this.addTokenToRequest(authToken, request));
-			}),
-			catchError((error: any) => {
-				this.router.navigate(['/login']);
-				return throwError(error);
 			})
 		);
 	}
