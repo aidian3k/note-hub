@@ -14,7 +14,7 @@
 				<div class="flex flex-col gap-2">
 					<mat-form-field>
 						<mat-label>Email</mat-label>
-						<input matInput formControlName="email" />
+						<input matInput style="color: white" formControlName="email" />
 						<mat-error *ngIf="formGroup.get('email')?.hasError('required')">
 							This field is required
 						</mat-error>
@@ -25,7 +25,7 @@
 
 					<mat-form-field>
 						<mat-label>Password</mat-label>
-						<input matInput type="password" formControlName="password" />
+						<input matInput type="password" style="color: white" formControlName="password" />
 						<mat-error *ngIf="formGroup.get('password')?.hasError('required')">
 							This field is required
 						</mat-error>
@@ -33,19 +33,24 @@
 
 					<mat-form-field>
 						<mat-label>Confirm password</mat-label>
-						<input matInput type="password" formControlName="confirmationPassword" />
+						<input
+							matInput
+							type="password"
+							style="color: white"
+							formControlName="confirmationPassword"
+						/>
 					</mat-form-field>
 					<div class="flex gap-2 w-full justify-center">
 						<mat-form-field>
 							<mat-label>Username</mat-label>
-							<input matInput formControlName="firstName" />
+							<input matInput formControlName="firstName" style="color: white" />
 							<mat-error *ngIf="formGroup.get('firstName')?.hasError('required')">
 								This field is required
 							</mat-error>
 						</mat-form-field>
 						<mat-form-field>
 							<mat-label>Name</mat-label>
-							<input matInput formControlName="lastName" />
+							<input matInput formControlName="lastName" style="color: white" />
 							<mat-error *ngIf="formGroup.get('lastName')?.hasError('required')">
 								This field is required
 							</mat-error>
@@ -54,7 +59,12 @@
 					<div class="flex justify-center items-center">
 						<mat-form-field>
 							<mat-label>Choose a birthday date</mat-label>
-							<input matInput [matDatepicker]="picker" formControlName="birthdayDate" />
+							<input
+								matInput
+								[matDatepicker]="picker"
+								formControlName="birthdayDate"
+								style="color: white"
+							/>
 							<mat-hint>MM/DD/YYYY</mat-hint>
 							<mat-datepicker #picker></mat-datepicker>
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
