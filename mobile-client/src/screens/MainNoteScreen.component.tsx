@@ -139,6 +139,7 @@ export const MainNoteScreen: FC = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
+        onPress={() => navigation.navigate("edit-note")}
       >
         <ButtonIcon as={AddIcon} />
       </Button>

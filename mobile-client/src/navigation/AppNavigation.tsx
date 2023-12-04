@@ -6,6 +6,9 @@ import { UserSliceState } from "../redux/user-slice/user-slice.type";
 import { NavigationContainer } from "@react-navigation/native";
 import { MainNoteScreen } from "../screens/MainNoteScreen.component";
 import { ReadNoteScreen } from "../screens/ReadNoteScreen.component";
+import { EditNoteScreen } from "../screens/NoteCreationScreen.component";
+import { LoginScreen } from "../screens/LoginScreen.component";
+import { RegisterScreen } from "../screens/RegisterScreen.component";
 
 const UnauthenticatedStack = createStackNavigator();
 const AuthorizatedStack = createStackNavigator();
@@ -30,6 +33,11 @@ export const AppNavigator: React.FC = () => {
           <AuthorizatedStack.Screen
             name={"read-note"}
             component={ReadNoteScreen}
+            initialParams={{ userSliceState }}
+          />
+          <AuthorizatedStack.Screen
+            name={"edit-note"}
+            component={EditNoteScreen}
             initialParams={{ userSliceState }}
           />
         </AuthorizatedStack.Navigator>
