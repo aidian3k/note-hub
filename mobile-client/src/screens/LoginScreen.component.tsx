@@ -22,7 +22,7 @@ import {
 } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 
-export const SignUpScreen: FC = () => {
+export const LoginScreen: FC = () => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -97,7 +97,7 @@ export const SignUpScreen: FC = () => {
           >
             You do not have an acoount?
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text
               style={{ fontWeight: "bold", textAlign: "center", fontSize: 15 }}
             >
