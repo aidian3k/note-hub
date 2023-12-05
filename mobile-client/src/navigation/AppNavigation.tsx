@@ -18,7 +18,7 @@ export const AppNavigator: React.FC = () => {
     (state: RootState) => state.user
   );
 
-  if (!userSliceState.userDetails) {
+  if (userSliceState.userDetails) {
     return (
       <NavigationContainer>
         <AuthorizatedStack.Navigator

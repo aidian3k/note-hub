@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import {
   ArrowLeftIcon,
@@ -9,11 +9,37 @@ import {
   TrashIcon,
 } from "@gluestack-ui/themed";
 import { DeleteNoteModal } from "../components/DeleteModal.component";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { Note, buildDateFromModificationDate } from "../model/note/Note";
+import { apiService } from "../api/apiService";
 
 export const ReadNoteScreen: FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const navigation = useNavigation();
+  const [note, setNote] = useState<Note>({
+    content: "",
+    title: "",
+    id: -1,
+    modificationDate: [],
+  });
+  const route = useRoute();
+
+  const fetchNoteData = async () => {
+    try {
+      // @ts-ignore
+      await apiService
+        .get<Note>(`/api/note/${route.params.noteId}`)
+        .then((result) => {
+          setNote(result.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNoteData();
+  }, [route]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#3b3c36" }}>
@@ -25,6 +51,7 @@ export const ReadNoteScreen: FC = () => {
             bg="$indigo600"
             borderRadius={"$full"}
             borderColor="$indigo600"
+            // @ts-ignore
             onPress={() => navigation.navigate("note-main-screen")}
           >
             <ButtonIcon as={ArrowLeftIcon} />
@@ -39,6 +66,10 @@ export const ReadNoteScreen: FC = () => {
               style={{
                 backgroundColor: "orange",
               }}
+              // @ts-ignore
+              onPress={() =>
+                navigation.navigate("edit-note", { noteId: note.id })
+              }
             >
               <ButtonIcon as={EditIcon} />
             </Button>
@@ -68,7 +99,7 @@ export const ReadNoteScreen: FC = () => {
             textAlign: "center",
           }}
         >
-          Beautiful weather app UI concepts we wish existed
+          {note.title}
         </Text>
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -93,7 +124,7 @@ export const ReadNoteScreen: FC = () => {
               textAlign: "center",
             }}
           >
-            4/12/2020
+            {`${buildDateFromModificationDate(note.modificationDate)}`}
           </Text>
         </HStack>
       </View>
@@ -107,16 +138,12 @@ export const ReadNoteScreen: FC = () => {
             textAlign: "center",
           }}
         >
-          In the ever-evolving world of app design, envisioning a weather app
-          that not only serves its purpose but also delights users with a
-          visually stunning and intuitive interface is a thrilling prospect.
-          Here are some conceptual ideas that could elevate the user experience
-          of a weather app to new heights
+          {note.content}
         </Text>
       </View>
       <DeleteNoteModal
-        id={1}
-        title={"some"}
+        id={note.id}
+        title={note.title}
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}
       />

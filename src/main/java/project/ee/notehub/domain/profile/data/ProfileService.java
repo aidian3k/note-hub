@@ -16,11 +16,12 @@ public class ProfileService {
 
 	public ProfileDTO getProfileInformation() {
 		Jwt currentUserPrincipal = currentUserService.getCurrentUserPrincipal();
-		return ProfileDTO.builder()
-				.email(currentUserPrincipal.getClaimAsString("email"))
-				.name(currentUserPrincipal.getClaimAsString("name"))
-				.username(currentUserPrincipal.getClaimAsString("family_name"))
-				.numberOfNotes(noteFacade.getAllNotes().size())
-				.build();
+		return ProfileDTO
+			.builder()
+			.email(currentUserPrincipal.getClaimAsString("email"))
+			.name(currentUserPrincipal.getClaimAsString("name"))
+			.username(currentUserPrincipal.getClaimAsString("family_name"))
+			.numberOfNotes(noteFacade.getAllNotes().size())
+			.build();
 	}
 }

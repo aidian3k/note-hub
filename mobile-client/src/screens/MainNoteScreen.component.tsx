@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import React, { FC, useEffect, useState } from "react";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import {
   AddIcon,
   Button,
@@ -12,11 +12,19 @@ import {
   SearchIcon,
 } from "@gluestack-ui/themed";
 import { NoteComponent } from "../components/Note.component";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { apiService, authenticationService } from "../api/apiService";
+import { Note } from "../model/note/Note";
+import { useDispatch } from "react-redux";
+import { clearUserDetails } from "../redux/user-slice/user.slice";
 
 export const MainNoteScreen: FC = () => {
-  const [isSearchingEnabled, setIsSearchingEnabled] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState<string>("");
+  const [userNotes, setUserNotes] = useState<Note[]>([]);
+  const [nameOfUser, setUserName] = useState<string>("");
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const route = useRoute();
 
   const getCurrentDateString: () => string = () => {
     const currentDate: Date = new Date();
@@ -24,28 +32,87 @@ export const MainNoteScreen: FC = () => {
     return `${currentDate.getDay()}/${currentDate.getMonth()}/${currentDate.getFullYear()}`;
   };
 
+  const getAllUserNotes = async () => {
+    try {
+      await apiService.get<Note[]>("/api/note").then((result) => {
+        setUserNotes(result.data.reverse());
+      });
+    } catch (erorr) {
+      console.log(error);
+    }
+  };
+
+  const handleUserNoteSearch = async () => {
+    try {
+      await apiService
+        .get<Note[]>("/api/note/search-word", {
+          params: { searchWord: searchText },
+        })
+        .then((result) => {
+          setUserNotes(result.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserName = async () => {
+    try {
+      await apiService.get("/api/profile").then((result) => {
+        setUserName(result.data.username);
+      });
+    } catch (erorr) {
+      console.log(error);
+    }
+  };
+
   const noteJsxElements = () => {
     const noteElements = [];
 
-    for (let i = 0; i < 10; i += 2) {
+    for (let i = 0; i < userNotes.length - 1 && userNotes.length > 1; i += 2) {
+      const currentNote: Note = userNotes[i];
+      const nextNote: Note = userNotes[i + 1];
+
       noteElements.push(
         <HStack space={"sm"} style={{ margin: 5, justifyContent: "center" }}>
-          <NoteComponent />
-          <NoteComponent />
+          <NoteComponent note={currentNote} />
+          <NoteComponent note={nextNote} />
         </HStack>
       );
     }
 
-    if (10 % 2 !== 0) {
+    if (userNotes.length % 2 !== 0) {
       noteElements.push(
         <HStack space={"sm"} style={{ margin: 5, justifyContent: "center" }}>
-          <NoteComponent />
+          <NoteComponent note={userNotes[userNotes.length - 1]} />
         </HStack>
       );
     }
 
     return noteElements;
   };
+
+  const handleLogoutUser = async () => {
+    try {
+      await authenticationService
+        .post<void>("/api/auth/logout")
+        .then((result) => {
+          dispatch(clearUserDetails());
+          navigation.navigate("Login");
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUserNotes();
+    getUserName();
+  }, [navigation, route]);
+
+  useEffect(() => {
+    handleUserNoteSearch();
+  }, [searchText]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#3b3c36" }}>
@@ -59,7 +126,7 @@ export const MainNoteScreen: FC = () => {
         }}
       >
         <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
-          Welcome back Adrian
+          Welcome back {nameOfUser}
         </Text>
         <Text style={{ color: "#fff", fontSize: 20, fontWeight: "bold" }}>
           {getCurrentDateString()}
@@ -74,9 +141,18 @@ export const MainNoteScreen: FC = () => {
           paddingHorizontal: 20,
         }}
       >
-        <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
-          Note-Hub
-        </Text>
+        <Button
+          size="lg"
+          p="$3.5"
+          bg="$indigo600"
+          borderRadius={"$full"}
+          borderColor="$indigo600"
+          onPress={handleLogoutUser}
+        >
+          <Text style={{ color: "white", fontSize: 14, fontWeight: "bold" }}>
+            Logout
+          </Text>
+        </Button>
         <HStack
           space={"sm"}
           style={{
@@ -86,31 +162,28 @@ export const MainNoteScreen: FC = () => {
             width: "65%",
           }}
         >
-          {isSearchingEnabled ? (
-            <Input
-              style={{
-                width: "70%",
-              }}
-              variant={"outline"}
-            >
-              <InputSlot pl="$3">
-                <InputIcon as={SearchIcon} style={{ color: "white" }} />
-              </InputSlot>
-              <InputField
-                placeholder="Search note"
-                style={{ color: "white" }}
-              />
-            </Input>
-          ) : (
-            <View style={{ width: "70%" }}></View>
-          )}
+          <Input
+            style={{
+              width: "70%",
+            }}
+            variant={"outline"}
+          >
+            <InputSlot pl="$3">
+              <InputIcon as={SearchIcon} style={{ color: "white" }} />
+            </InputSlot>
+            <InputField
+              placeholder="Search note"
+              style={{ color: "white" }}
+              onChangeText={(text) => setSearchText(text)}
+            />
+          </Input>
           <Button
             borderRadius="$full"
             size="lg"
             p="$3.5"
             bg="$indigo600"
             borderColor="$indigo600"
-            onPress={() => setIsSearchingEnabled(!isSearchingEnabled)}
+            onPress={() => handleUserNoteSearch()}
           >
             <ButtonIcon as={SearchIcon} />
           </Button>

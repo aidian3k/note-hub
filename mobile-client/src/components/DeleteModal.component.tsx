@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Text, View } from "react-native";
 import {
   Button,
@@ -14,7 +14,15 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Spinner,
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  useToast,
+  VStack,
 } from "@gluestack-ui/themed";
+import { apiService } from "../api/apiService";
+import { useNavigation } from "@react-navigation/native";
 
 export const DeleteNoteModal: FC<{
   id: number;
@@ -23,6 +31,65 @@ export const DeleteNoteModal: FC<{
   setShowModal: any;
 }> = (props) => {
   const { id, title, showModal, setShowModal } = props;
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const navigation = useNavigation();
+
+  const deleteCurrentNote = async () => {
+    try {
+      setLoading(true);
+      await apiService
+        .delete<void>(`/api/note/${id}`)
+        .then((result) => result.data);
+
+      toast.show({
+        placement: "top",
+        render: ({ id }) => {
+          return (
+            <Toast
+              nativeID={"toast-" + id}
+              action="error"
+              variant="accent"
+              mt="$8"
+            >
+              <VStack space="xs">
+                <ToastTitle>Note deleted successfully</ToastTitle>
+                <ToastDescription>
+                  The note with title {title} has been deleted successfully!
+                </ToastDescription>
+              </VStack>
+            </Toast>
+          );
+        },
+      });
+      setShowModal(false);
+      navigation.navigate("note-main-screen");
+    } catch (error) {
+      console.log(error);
+      toast.show({
+        placement: "top",
+        render: ({ id }) => {
+          return (
+            <Toast
+              nativeID={"toast-" + id}
+              action="error"
+              variant="accent"
+              mt="$8"
+            >
+              <VStack space="xs">
+                <ToastTitle>Error during note deletion</ToastTitle>
+                <ToastDescription>
+                  There was a problem with deleting the note!
+                </ToastDescription>
+              </VStack>
+            </Toast>
+          );
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Modal
@@ -85,14 +152,13 @@ export const DeleteNoteModal: FC<{
                 size="sm"
                 action="positive"
                 borderWidth="$0"
-                onPress={() => {
-                  setShowModal(false);
-                }}
+                onPress={deleteCurrentNote}
                 style={{
                   backgroundColor: "red",
                 }}
               >
                 <ButtonText>Delete</ButtonText>
+                {loading && <Spinner />}
               </Button>
             </HStack>
           </View>

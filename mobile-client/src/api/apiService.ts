@@ -3,11 +3,11 @@ import { store } from '../redux/store';
 import { clearUserDetails, setUserDetails } from '../redux/user-slice/user.slice';
 
 export const apiService: AxiosInstance = axios.create({
-	baseURL: 'http://localhost:8080'
+	baseURL: 'http://localhost:8082'
 });
 
 export const authenticationService: AxiosInstance = axios.create({
-	baseURL: 'http://localhost:8080'
+	baseURL: 'http://localhost:8082'
 });
 
 apiService.interceptors.request.use(

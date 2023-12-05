@@ -2,8 +2,10 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import { VStack } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
+import { buildDateFromModificationDate, Note } from "../model/note/Note";
 
-export const NoteComponent: React.FC = () => {
+export const NoteComponent: React.FC<{ note: Note }> = (props) => {
+  const { note } = props;
   const navigation = useNavigation();
 
   const getRandomBackgroundColorFromPalette = () => {
@@ -19,7 +21,8 @@ export const NoteComponent: React.FC = () => {
         width: "50%",
         borderRadius: 25,
       }}
-      onPress={() => navigation.navigate("read-note")}
+      // @ts-ignore
+      onPress={() => navigation.navigate("read-note", { noteId: note.id })}
     >
       <VStack space={"md"} style={{ padding: 20 }}>
         <Text
@@ -29,7 +32,7 @@ export const NoteComponent: React.FC = () => {
             color: "#333",
           }}
         >
-          Title of the note
+          {note.title}
         </Text>
         <VStack space={"sm"}>
           <Text
@@ -39,10 +42,10 @@ export const NoteComponent: React.FC = () => {
               color: "#555",
             }}
           >
-            Some text in here about the vital things of the biology
+            {note.content}
           </Text>
           <Text style={{ fontSize: 12, color: "black", fontWeight: "bold" }}>
-            May 21, 2020
+            {`${buildDateFromModificationDate(note.modificationDate)}`}
           </Text>
         </VStack>
       </VStack>
