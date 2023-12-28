@@ -22,4 +22,10 @@ public class RegisterPageVerifyWebElements {
 
 	@FindBy(xpath = "(//mat-error)[2]")
 	private WebElement passwordErrorText;
+
+	@FindBy(xpath = "//app-register/div/div/div/form/button")
+	private WebElement registerButton;
+
+	@FindBy(xpath = "//mat-dialog-container//h2")
+	private WebElement registrationProblemDialogText;
 }

@@ -8,12 +8,12 @@ import org.openqa.selenium.WebDriver;
 @Accessors(fluent = true)
 public class RegisterPage {
 
-	private final RegisterPageVerifyWebElements verify;
+	private final RegisterPageVerifyController verify;
 	private final RegisterPageActController act;
 
 	public RegisterPage(WebDriver webDriver) {
 		this.act = new RegisterPageActController(webDriver);
-		this.verify = new RegisterPageVerifyWebElements(webDriver);
+		this.verify = new RegisterPageVerifyController(webDriver);
 	}
 
 	public static RegisterPage getRegisterPage(WebDriver driver) {

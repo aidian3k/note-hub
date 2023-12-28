@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 public final class ApplicationEndpoints {
 
 	public static final String LOGIN_URL = "http://localhost/login";
+	public static final String REGISTER_URL = "http://localhost/register";
 }
