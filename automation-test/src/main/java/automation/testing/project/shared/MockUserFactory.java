@@ -13,6 +13,7 @@ public final class MockUserFactory {
 			.builder()
 			.email("some-email@wp.pl")
 			.name("adrian")
+			.password("sample-password")
 			.birthdayDate(LocalDate.of(2002, 7, 16))
 			.username("sample-username")
 			.name("adrian")

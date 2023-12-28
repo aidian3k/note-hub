@@ -23,7 +23,7 @@ public class RegisterPageVerifyController {
 	}
 
 	public RegisterPageVerifyController verifyThatEmailIsNotEntered() {
-		String expectedMessage = "Username field is required";
+		String expectedMessage = "This field is required";
 
 		Assertions
 			.assertThat(registerPageVerifyWebElements.emailErrorText().getText())
@@ -33,7 +33,7 @@ public class RegisterPageVerifyController {
 	}
 
 	public RegisterPageVerifyController verifyThatPasswordIsNotEntered() {
-		String expectedMessage = "Password field is required";
+		String expectedMessage = "This field is required";
 
 		Assertions
 			.assertThat(registerPageVerifyWebElements.passwordErrorText().getText())
@@ -42,7 +42,9 @@ public class RegisterPageVerifyController {
 		return this;
 	}
 
-	public RegisterPageVerifyController verifyDialogErrorExistence() {
+	public RegisterPageVerifyController verifyDialogErrorExistence()
+		throws InterruptedException {
+		Thread.sleep(3000);
 		Assertions
 			.assertThat(
 				registerPageVerifyWebElements.registrationProblemDialogText().getText()

@@ -9,6 +9,7 @@ import features.BasicSeleniumTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.LocalDate;
 
@@ -18,8 +19,9 @@ class RegisterPageTest extends BasicSeleniumTest {
 
 	@BeforeEach
 	void setUpLoginPage() {
-		webDriver.navigate().to(ApplicationEndpoints.REGISTER_URL);
+		this.webDriver = new ChromeDriver(chromeOptions);
 		this.registerPage = new RegisterPage(webDriver);
+		webDriver.navigate().to(ApplicationEndpoints.REGISTER_URL);
 	}
 
 	@Test
@@ -43,8 +45,8 @@ class RegisterPageTest extends BasicSeleniumTest {
 	void shouldDisplayErrorsWhenUserDoesNotProvideAnyEmailAndPassword() {
 		registerPage
 			.act()
-			.sendEmailKeys("")
-			.sendPasswordKeys("")
+			.clickEmailInput()
+			.clickPasswordInput()
 			.sendConfirmPasswordKeys("")
 			.sendUserNameAndNameAndBirthDayDateKeys(
 				"aa",
@@ -59,7 +61,8 @@ class RegisterPageTest extends BasicSeleniumTest {
 	}
 
 	@Test
-	void shouldCorrectlyCreateUserWhenProvidedDataIsCorrect() {
+	void shouldCorrectlyCreateUserWhenProvidedDataIsCorrect()
+		throws InterruptedException {
 		// Random user
 		User user = MockUserFactory
 			.getMockUser()
@@ -71,6 +74,7 @@ class RegisterPageTest extends BasicSeleniumTest {
 		registerPage.act().registerUser(user).submitRegistration();
 
 		// then Webdriver should move to other page
+		Thread.sleep(3000);
 		Assertions.assertThat(webDriver.getCurrentUrl()).doesNotContain("register");
 	}
 
@@ -94,7 +98,8 @@ class RegisterPageTest extends BasicSeleniumTest {
 	}
 
 	@Test
-	void shouldThrowAnErrorWhenTryingToCreateUserThatAlreadyExist() {
+	void shouldThrowAnErrorWhenTryingToCreateUserThatAlreadyExist()
+		throws InterruptedException {
 		// Random user
 		User user = MockUserFactory
 			.getMockUser()
@@ -103,11 +108,16 @@ class RegisterPageTest extends BasicSeleniumTest {
 			.build();
 
 		// when creating the user for the first time and then creating the same user for the second time
-		registerPage.act().registerUser(user);
+		registerPage.act().registerUser(user).submitRegistration();
+		Thread.sleep(3000);
+
 		webDriver.navigate().to(ApplicationEndpoints.REGISTER_URL);
-		registerPage.act().registerUser(user).then()
-				.verify()
-						.verifyDialogErrorExistence();
+		registerPage
+			.act()
+			.registerUser(user)
+			.submitRegistration()
+			.verify()
+			.verifyDialogErrorExistence();
 
 		// then user should stay on the same site
 		Assertions.assertThat(webDriver.getCurrentUrl()).contains("register");

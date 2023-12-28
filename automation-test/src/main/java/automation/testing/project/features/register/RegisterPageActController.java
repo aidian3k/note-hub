@@ -16,6 +16,18 @@ public class RegisterPageActController {
 		this.registerPageActWebElements = new RegisterPageActWebElements(webDriver);
 	}
 
+	public RegisterPageActController clickEmailInput() {
+		registerPageActWebElements.emailInput().click();
+
+		return this;
+	}
+
+	public RegisterPageActController clickPasswordInput() {
+		registerPageActWebElements.passwordInput().click();
+
+		return this;
+	}
+
 	public RegisterPageActController sendEmailKeys(String keys) {
 		registerPageActWebElements.emailInput().sendKeys(keys);
 

@@ -15,7 +15,8 @@ public class LoginVerifyController {
 		this.loginVerifyWebElements = new LoginVerifyWebElements(webDriver);
 	}
 
-	public LoginVerifyController verifyThatUserNameIsNotEntered() {
+	public LoginVerifyController verifyThatUserNameIsNotEntered() throws InterruptedException {
+		Thread.sleep(1000);
 		String expectedMessage = "Username field is required";
 
 		Assertions
@@ -25,7 +26,9 @@ public class LoginVerifyController {
 		return this;
 	}
 
-	public LoginVerifyController verifyThatPasswordIsNotEntered() {
+	public LoginVerifyController verifyThatPasswordIsNotEntered()
+		throws InterruptedException {
+		Thread.sleep(1000);
 		String expectedMessage = "Password field is required";
 
 		Assertions

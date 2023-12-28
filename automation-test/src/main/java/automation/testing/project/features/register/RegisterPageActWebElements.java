@@ -32,16 +32,16 @@ public class RegisterPageActWebElements {
 	)
 	private WebElement confirmPasswordInput;
 
-	@FindBy(xpath = "//*[@id=\"mat-input-7\"]")
+	@FindBy(xpath = "//app-register/div/div/div/form/div/div[2]/mat-form-field//input")
 	private WebElement birthDayDateInput;
 
 	@FindBy(
-		xpath = "//app-register/div/div/div/form/div/div[1]/mat-form-field[1]"
+		xpath = "//app-register/div/div/div/form/div/div[1]/mat-form-field[1]//input"
 	)
 	private WebElement userNameInput;
 
 	@FindBy(
-		xpath = "//app-register/div/div/div/form/div/div[1]/mat-form-field[2]"
+		xpath = "//app-register/div/div/div/form/div/div[1]/mat-form-field[2]//input"
 	)
 	private WebElement nameInput;
 

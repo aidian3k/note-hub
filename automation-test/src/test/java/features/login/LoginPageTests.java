@@ -2,14 +2,17 @@ package features.login;
 
 import automation.testing.project.features.login.LoginPage;
 import automation.testing.project.features.register.RegisterPageActController;
+import automation.testing.project.shared.RandomEmailGenerator;
 import automation.testing.project.shared.User;
 import features.ApplicationEndpoints;
 import features.BasicSeleniumTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
 class LoginPageTests extends BasicSeleniumTest {
 
@@ -17,6 +20,7 @@ class LoginPageTests extends BasicSeleniumTest {
 
 	@BeforeEach
 	void setUpLoginPage() {
+		this.webDriver = new ChromeDriver(chromeOptions);
 		webDriver.navigate().to(ApplicationEndpoints.LOGIN_URL);
 		this.loginPage = new LoginPage(webDriver);
 	}
@@ -38,7 +42,8 @@ class LoginPageTests extends BasicSeleniumTest {
 	}
 
 	@Test
-	void shouldDisplayErrorMessageWhenUserDoesNotEnterEmail() {
+	void shouldDisplayErrorMessageWhenUserDoesNotEnterEmail()
+		throws InterruptedException {
 		loginPage
 			.act()
 			.sendUserName("")
@@ -48,7 +53,8 @@ class LoginPageTests extends BasicSeleniumTest {
 	}
 
 	@Test
-	void shouldDisplayErrorMessageWhenUserDoesNotEnterPassword() {
+	void shouldDisplayErrorMessageWhenUserDoesNotEnterPassword()
+		throws InterruptedException {
 		loginPage
 			.act()
 			.sendPassword("")
@@ -58,9 +64,9 @@ class LoginPageTests extends BasicSeleniumTest {
 	}
 
 	@Test
-	void shouldLoginUserProperlyWhenUserExist() {
+	void shouldLoginUserProperlyWhenUserExist() throws InterruptedException {
 		// given sample user
-		String sampleEmail = "sample-email@wp.pl";
+		String sampleEmail = RandomEmailGenerator.generateRandomEmail();
 		String samplePassword = "sample-password";
 
 		User user = User
@@ -78,7 +84,8 @@ class LoginPageTests extends BasicSeleniumTest {
 			webDriver
 		);
 
-		registerPageActController.registerUser(user);
+		registerPageActController.registerUser(user).submitRegistration();
+		webDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
 		loginPage
 			.act()
@@ -87,6 +94,7 @@ class LoginPageTests extends BasicSeleniumTest {
 			.clickSubmitButton();
 
 		// then webdriver should not be on login page
+		Thread.sleep(1000);
 		Assertions.assertThat(webDriver.getCurrentUrl()).doesNotContain("login");
 	}
 }

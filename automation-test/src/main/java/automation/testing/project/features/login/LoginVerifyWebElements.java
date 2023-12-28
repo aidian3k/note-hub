@@ -20,6 +20,6 @@ class LoginVerifyWebElements {
 	@FindBy(xpath = "(//app-login//mat-error)[1]")
 	private WebElement userNameError;
 
-	@FindBy(xpath = "(//app-login//mat-error)[2]")
+	@FindBy(xpath = "//*[@id=\"mat-error-1\"]")
 	private WebElement passwordError;
 }
