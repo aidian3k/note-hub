@@ -122,7 +122,7 @@ export const DeleteNoteModal: FC<{
             Are you sure you want to delete note with title:
           </Text>
           <Heading size="lg" style={{ textAlign: "center" }}>
-            Some title
+            {title}
           </Heading>
         </ModalBody>
         <ModalFooter>

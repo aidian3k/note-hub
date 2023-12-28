@@ -12,6 +12,7 @@ COPY gradlew.bat .
 COPY src/ ./src
 
 # Running application
+ENV SPRING_PROFILES_ACTIVE=prod
 RUN ./gradlew build -x test
 EXPOSE 8082
 

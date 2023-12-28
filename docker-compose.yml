@@ -5,17 +5,13 @@ services:
     image: quay.io/keycloak/keycloak:20.0.1
     container_name: keycloak
     environment:
-      - KEYCLOAK_ADMIN=root
-      - KEYCLOAK_ADMIN_PASSWORD=root
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
     command: start-dev
     ports:
       - "8080:8080"
     networks:
       - network
-    healthcheck:
-      test: "curl -f http://localhost:8080/admin || exit 1"
-      retries: 2
-      timeout: 3s
 
   keycloak-initializer:
     container_name: keycloak-initializer
@@ -28,14 +24,20 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      keycloak:
-        condition: service_healthy
+      - keycloak
 
   backend-client:
-    container_name: note-hub-backend
+    container_name: backend-client
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
+      - ISSUER_URI=http://keycloak:8080/realms/app
+      - JWK_SET_URI=http://keycloak:8080/realms/app/protocol/openid-connect/certs
+      - AUTH_SERVER_URL=http://keycloak:8080
     networks:
       - network
     ports:
@@ -46,6 +48,8 @@ services:
 
   database:
     container_name: database
+    networks:
+      - network
     image: postgres
     ports:
       - "5432:5432"
@@ -61,9 +65,24 @@ services:
     networks:
       - network
     ports:
-      - "4200:4200"
+      - "4200:80"
     depends_on:
       - backend-client
+
+  nginx:
+    container_name: note-hub-nginx
+    networks:
+      - network
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    depends_on:
+      backend-client:
+        condition: service_started
+      frontend-client:
+        condition: service_started
+    ports:
+      - "80:80"
 
 networks:
   network:

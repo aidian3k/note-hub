@@ -27,7 +27,7 @@ class SecurityConfiguration {
 		httpSecurity.cors(Customizer.withDefaults());
 
 		httpSecurity.authorizeHttpRequests(httpRequest -> {
-			httpRequest.requestMatchers("api/auth/**").permitAll();
+			httpRequest.requestMatchers("/api/auth/**").permitAll();
 			httpRequest.anyRequest().authenticated();
 		});
 

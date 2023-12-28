@@ -54,7 +54,6 @@ export const LoginScreen: FC = () => {
   const handleLoginRequest = async (userLoginRequest: UserLoginRequest) => {
     try {
       setLoading(true);
-      console.log(userLoginRequest);
       await authenticationService
         .post<User>("/api/auth/login", {
           username: userLoginRequest.email,
@@ -82,7 +81,7 @@ export const LoginScreen: FC = () => {
           );
         },
       });
-      navigation.navigate("note-main-screen");
+      navigation.navigate("note-main-screen", { paramRoute: "" });
     } catch (error) {
       console.log(error);
       toast.show({

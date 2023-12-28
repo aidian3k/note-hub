@@ -3,13 +3,22 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: "${OAUTH_RESOURCE_SERVER_JWT_ISSUER_URI}"
-          jwk-set-uri: "${OAUTH_RESOURCE_SERVER_JWT_SET_URI}"
+          issuer-uri: "${ISSUER_URI}"
+          jwk-set-uri: "${JWK_SET_URI}"
   datasource:
-    username: "${DATASOURCE_USERNAME}"
-    password: "${DATASOURCE_PASSWORD}"
+    username: "${POSTGRES_USER}"
+    password: "${POSTGRES_PASSWORD}"
     driver-class-name: org.postgresql.Driver
-    url: ${DATASOURCE_URL}
+    url: "${DATASOURCE_URL}"
   jpa:
     hibernate:
       ddl-auto: update
+
+keycloak:
+  realm: app
+  auth-server-url: "${AUTH_SERVER_URL}"
+  resource: backend-client
+  credentials:
+    secret: k7LCecIUFVlbSagjIxAv1xOjt4RL3iI8
+  bearer-only: true
+  use-resource-role-mappings: true

@@ -10,7 +10,7 @@ import project.ee.notehub.domain.user.dto.UserLoginResponse;
 
 @FeignClient(
 	name = "keyCloakLogin",
-	url = "http://localhost:8080/realms/app/protocol/openid-connect/token"
+	url = "http://keycloak:8080/realms/app/protocol/openid-connect/token"
 )
 public interface KeycloakLoginConnector {
 	@Headers("Content-Type: application/x-www-form-urlencoded")

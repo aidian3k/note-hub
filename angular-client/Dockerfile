@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:latest AS build
 
 WORKDIR /app
 
@@ -8,5 +8,12 @@ RUN npm install -g @angular/cli
 RUN npm i --silent
 
 COPY . .
+RUN ng build
 
-ENTRYPOINT ["npm", "start"]
+FROM nginx:alpine
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=build /app/dist/angular-client /etc/nginx/html
+
+EXPOSE 80
