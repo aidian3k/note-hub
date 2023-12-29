@@ -61,4 +61,7 @@ public class MainPageActWebElements {
 
 	@FindBy(xpath = "///app-note-read/div[3]/div/p")
 	private WebElement noteModalContent;
+
+	@FindBy(xpath = "//mat-dialog-actions/div/button[1]")
+	private WebElement confirmDeletionButton;
 }

@@ -2,9 +2,10 @@ package automation.testing.project.features.main;
 
 import automation.testing.project.shared.domain.Note;
 import automation.testing.project.shared.tools.WebDriverTools;
-import java.util.stream.IntStream;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+
+import java.util.stream.IntStream;
 
 public class MainPageActController {
 
@@ -29,6 +30,7 @@ public class MainPageActController {
 	}
 
 	public MainPageActController clickReadMoreButton() {
+		WebDriverTools.makeProgramWait(1);
 		mainPageActWebElements.readMoreButton().click();
 
 		return this;
@@ -69,6 +71,7 @@ public class MainPageActController {
 
 		mainPageActWebElements.noteTitleInput().click();
 		mainPageActWebElements.noteContentInput().click();
+		mainPageActWebElements.createNoteDialogButton().click();
 
 		return this;
 	}
@@ -91,11 +94,21 @@ public class MainPageActController {
 		return this;
 	}
 
+	public MainPageActController editNote(Note note) {
+		WebDriverTools.makeProgramWait(1);
+		mainPageActWebElements.noteTitleInput().clear();
+		mainPageActWebElements.noteTitleInput().sendKeys(note.getTitle());
+		mainPageActWebElements.noteContentInput().clear();
+		mainPageActWebElements.noteContentInput().sendKeys(note.getContent());
+		mainPageActWebElements.createNoteDialogButton().click();
+
+		return this;
+	}
+
 	public MainPageActController createNote(Note note) {
-		WebDriverTools.waitUntilElementIsClickable(
-			webDriver,
-			mainPageActWebElements.noteContentInput()
-		);
+		clickCreateNoteButton();
+		WebDriverTools.makeProgramWait(1);
+
 		sendNoteTitle(note.getTitle());
 		sendNoteContent(note.getContent());
 		mainPageActWebElements.createNoteDialogButton().click();
@@ -107,19 +120,18 @@ public class MainPageActController {
 		return MainPage.getMainPage(webDriver);
 	}
 
-	public MainPageActController createMultipleNotes(Note noteToSearch) {
-		final int numberOfCreatedNotes = 3;
+	public MainPageActController createMultipleNotes(Note noteToSearch, int numberOfNotes) {
 
 		IntStream
-			.range(0, numberOfCreatedNotes)
+			.range(0, numberOfNotes)
 			.forEach(element -> {
 				WebDriverTools.makeProgramWait(1);
 
 				createNote(
 					Note
 						.builder()
-						.title("title " + Integer.toString(element))
-						.content("content" + Integer.toString(element))
+						.title("title " + element)
+						.content("content" + element)
 						.build()
 				);
 			});
@@ -133,6 +145,14 @@ public class MainPageActController {
 		WebDriverTools.makeProgramWait(1);
 		mainPageActWebElements.searchByTitleInput().sendKeys(title);
 		mainPageActWebElements.searchByTitleInput().sendKeys(Keys.ENTER);
+
+		return this;
+	}
+
+	public MainPageActController deleteNoteFromMainScreen() {
+		clickDeleteButton();
+		WebDriverTools.makeProgramWait(1);
+		mainPageActWebElements.confirmDeletionButton().click();
 
 		return this;
 	}

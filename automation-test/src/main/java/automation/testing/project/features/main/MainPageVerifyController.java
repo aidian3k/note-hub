@@ -1,16 +1,16 @@
 package automation.testing.project.features.main;
 
-import static org.assertj.core.api.Assertions.*;
-
 import automation.testing.project.shared.domain.Note;
 import automation.testing.project.shared.domain.User;
 import automation.testing.project.shared.tools.WebDriverTools;
-import java.util.List;
-import java.util.Set;
-import org.assertj.core.api.Assertions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MainPageVerifyController {
 
@@ -44,6 +44,7 @@ public class MainPageVerifyController {
 	}
 
 	public MainPageVerifyController verifyThatValidAboutUsContentIsDisplayed() {
+		WebDriverTools.makeProgramWait(1);
 		final String firstParagraphContent =
 			"Welcome to our notes app! We're passionate about helping you stay organized, capture your thoughts, and make life a little bit easier. Our mission is to provide you with a user-friendly platform that enhances your productivity and creativity.";
 		assertThat(
@@ -122,6 +123,20 @@ public class MainPageVerifyController {
 		return this;
 	}
 
+	public MainPageVerifyController verifySearchNoteByTitle(Note note) {
+		WebDriverTools.makeProgramWait(1);
+
+		List<String> addedNotesTitles = mainPageVerifyWebElements
+			.notesTitles()
+			.stream()
+			.map(WebElement::getText)
+			.toList();
+
+		assertThat(addedNotesTitles).contains(note.getTitle());
+
+		return this;
+	}
+
 	public MainPageVerifyController verifyThatReadMoreModalHasValidNoteInformation(
 		Note note
 	) {
@@ -165,6 +180,22 @@ public class MainPageVerifyController {
 			.toList();
 
 		assertThat(addedNotesTitles).hasSize(expectedSize);
+
+		return this;
+	}
+
+	public MainPageVerifyController verifyThatAllUserNotesAreDisplayed(
+		int numberOfNotesToCreate
+	) {
+		WebDriverTools.makeProgramWait(1);
+
+		List<String> addedNoteTitles = mainPageVerifyWebElements
+			.notesTitles()
+			.stream()
+			.map(WebElement::getText)
+			.toList();
+
+		assertThat(addedNoteTitles).hasSize(numberOfNotesToCreate);
 
 		return this;
 	}

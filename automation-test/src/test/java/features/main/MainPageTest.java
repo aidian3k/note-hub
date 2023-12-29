@@ -76,7 +76,6 @@ class MainPageTest extends BasicSeleniumTest {
 
 		mainPage
 			.act()
-			.clickCreateNoteButton()
 			.createNote(note)
 			.then()
 			.verify()
@@ -100,7 +99,7 @@ class MainPageTest extends BasicSeleniumTest {
 			.verifyThatNoteHasBeenAdded(note)
 			.then()
 			.act()
-			.clickDeleteButton()
+			.deleteNoteFromMainScreen()
 			.then()
 			.verify()
 			.verifyThatNoteHasBeenDeleted(note);
@@ -127,7 +126,7 @@ class MainPageTest extends BasicSeleniumTest {
 			.act()
 			.clickReadMoreButton()
 			.clickEditNoteModalButton()
-			.createNote(editedNote)
+			.editNote(editedNote)
 			.then()
 			.verify()
 			.verifyThatNoteHasBeenAdded(editedNote);
@@ -164,6 +163,7 @@ class MainPageTest extends BasicSeleniumTest {
 	@Test
 	void shouldCorrectlyFindNoteByTitleWhenUserEntersValidTitleInTheSearch() {
 		// Creating note to search
+		final int numberOfNotesToCreate = 3;
 		Note noteToSearch = Note
 			.builder()
 			.title("search-title")
@@ -172,20 +172,31 @@ class MainPageTest extends BasicSeleniumTest {
 
 		mainPage
 			.act()
-			.createMultipleNotes(noteToSearch)
+			.createMultipleNotes(noteToSearch, numberOfNotesToCreate)
 			.sendKeysToSearchAndPressEnter(noteToSearch.getTitle())
 			.then()
 			.verify()
-			.verifyThatNoteHasBeenDeleted(noteToSearch);
+			.verifySearchNoteByTitle(noteToSearch);
 	}
 
 	@Test
 	void shouldFindZeroNotesWhenNotesAreNotAddedToTheUser() {
+		final int numberOfNotesToCreate = 4;
+		final int numberOfNotesToSearch = 1;
+		Note noteToSearch = Note
+			.builder()
+			.title("search-title")
+			.content("search-content")
+			.build();
+
 		mainPage
 			.act()
+			.createMultipleNotes(noteToSearch, numberOfNotesToCreate)
 			.sendKeysToSearchAndPressEnter("")
 			.then()
 			.verify()
-			.verifyThatNoNoteIsDisplayedOnTheScreen();
+			.verifyThatAllUserNotesAreDisplayed(
+				numberOfNotesToCreate + numberOfNotesToSearch
+			);
 	}
 }
