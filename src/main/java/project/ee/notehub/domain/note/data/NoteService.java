@@ -10,6 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -53,14 +56,12 @@ public class NoteService {
 
 	public List<NoteDTO> getNotesBySearchWord(String searchWord) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		String userid =
-			((Jwt) SecurityContextHolder.getContext().getAuthentication()).getId();
 		CriteriaQuery<NoteDTO> criteriaQuery = criteriaBuilder.createQuery(
 			NoteDTO.class
 		);
 		Root<Note> noteRoot = criteriaQuery.from(Note.class);
 		List<Predicate> predicates = new ArrayList<>();
-		predicates.add(criteriaBuilder.equal(noteRoot.get("userId"), userid));
+		predicates.add(criteriaBuilder.equal(noteRoot.get("userId"), currentUserService.getCurrentUserEmbeddedId()));
 
 		if (searchWord != null) {
 			predicates.add(
