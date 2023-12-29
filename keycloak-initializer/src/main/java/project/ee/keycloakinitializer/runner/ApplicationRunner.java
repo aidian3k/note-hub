@@ -36,7 +36,6 @@ class ApplicationRunner implements CommandLineRunner {
 			keycloak,
 			keycloakProperties
 		);
-		//realmManagementService.deleteAlreadyExistingRealmConfiguration();
 
 		ClientManagementService clientManagementService = new ClientManagementService(
 			clientProperties

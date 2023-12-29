@@ -5,8 +5,13 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import project.ee.notehub.domain.note.dto.CreateNoteDTO;
 import project.ee.notehub.domain.note.dto.NoteDTO;
@@ -15,10 +20,6 @@ import project.ee.notehub.domain.note.entity.Note;
 import project.ee.notehub.domain.note.mapper.NoteMapper;
 import project.ee.notehub.domain.user.data.CurrentUserService;
 import project.ee.notehub.infrastructure.exception.note.NoteNotFoundException;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -52,11 +53,14 @@ public class NoteService {
 
 	public List<NoteDTO> getNotesBySearchWord(String searchWord) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		String userid =
+			((Jwt) SecurityContextHolder.getContext().getAuthentication()).getId();
 		CriteriaQuery<NoteDTO> criteriaQuery = criteriaBuilder.createQuery(
 			NoteDTO.class
 		);
 		Root<Note> noteRoot = criteriaQuery.from(Note.class);
 		List<Predicate> predicates = new ArrayList<>();
+		predicates.add(criteriaBuilder.equal(noteRoot.get("userId"), userid));
 
 		if (searchWord != null) {
 			predicates.add(

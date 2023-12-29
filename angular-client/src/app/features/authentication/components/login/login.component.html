@@ -21,7 +21,13 @@
 					</mat-form-field>
 					<mat-form-field>
 						<mat-label>Password</mat-label>
-						<input class="w-full" style="color: white" matInput formControlName="password" />
+						<input
+							type="password"
+							class="w-full"
+							style="color: white"
+							matInput
+							formControlName="password"
+						/>
 						<mat-error *ngIf="formGroup.get('password')?.hasError('required')">
 							Password field is required
 						</mat-error>

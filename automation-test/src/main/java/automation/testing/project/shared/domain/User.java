@@ -1,4 +1,4 @@
-package automation.testing.project.shared;
+package automation.testing.project.shared.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

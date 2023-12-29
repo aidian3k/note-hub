@@ -8,17 +8,11 @@
 					<mat-icon matSuffix>search</mat-icon>
 					<input
 						type="text"
+						style="color: white"
 						matInput
 						placeholder="Sample note"
 						(change)="handleSearchWordChange($event)"
 					/>
-				</mat-form-field>
-				<mat-form-field>
-					<mat-label>Tags</mat-label>
-					<mat-select multiple>
-						<mat-option>{{ 'first tag' }}</mat-option>
-						<mat-option>{{ 'second-tag' }}</mat-option>
-					</mat-select>
 				</mat-form-field>
 			</div>
 		</div>

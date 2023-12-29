@@ -1,9 +1,9 @@
 package features.register;
 
 import automation.testing.project.features.register.RegisterPage;
-import automation.testing.project.shared.MockUserFactory;
-import automation.testing.project.shared.RandomEmailGenerator;
-import automation.testing.project.shared.User;
+import automation.testing.project.shared.factory.MockUserFactory;
+import automation.testing.project.shared.tools.RandomEmailGenerator;
+import automation.testing.project.shared.domain.User;
 import features.ApplicationEndpoints;
 import features.BasicSeleniumTest;
 import org.assertj.core.api.Assertions;

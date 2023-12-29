@@ -1,5 +1,8 @@
 package automation.testing.project.features.login;
 
+import static automation.testing.project.shared.tools.WebDriverTools.*;
+
+import automation.testing.project.shared.tools.WebDriverTools;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +18,7 @@ public class LoginActController {
 	}
 
 	public LoginActController sendUserName(String username) {
+		waitUntilElementIsClickable(webDriver, loginActWebElements.emailInput());
 		loginActWebElements.emailInput().sendKeys(username);
 
 		return this;

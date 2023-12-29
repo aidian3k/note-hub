@@ -1,4 +1,4 @@
-package automation.testing.project.shared;
+package automation.testing.project.shared.tools;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

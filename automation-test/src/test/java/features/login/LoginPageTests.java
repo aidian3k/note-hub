@@ -2,8 +2,8 @@ package features.login;
 
 import automation.testing.project.features.login.LoginPage;
 import automation.testing.project.features.register.RegisterPageActController;
-import automation.testing.project.shared.RandomEmailGenerator;
-import automation.testing.project.shared.User;
+import automation.testing.project.shared.tools.RandomEmailGenerator;
+import automation.testing.project.shared.domain.User;
 import features.ApplicationEndpoints;
 import features.BasicSeleniumTest;
 import org.assertj.core.api.Assertions;

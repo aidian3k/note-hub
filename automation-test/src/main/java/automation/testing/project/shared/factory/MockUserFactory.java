@@ -1,5 +1,6 @@
-package automation.testing.project.shared;
+package automation.testing.project.shared.factory;
 
+import automation.testing.project.shared.domain.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

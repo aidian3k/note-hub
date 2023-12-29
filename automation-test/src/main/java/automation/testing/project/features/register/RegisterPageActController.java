@@ -1,6 +1,6 @@
 package automation.testing.project.features.register;
 
-import automation.testing.project.shared.User;
+import automation.testing.project.shared.domain.User;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
