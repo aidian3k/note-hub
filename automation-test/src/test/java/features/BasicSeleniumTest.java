@@ -17,8 +17,8 @@ public class BasicSeleniumTest {
 	public void setUp() {
 		this.chromeOptions = new ChromeOptions();
 		WebDriverManager.chromedriver().setup();
-		chromeOptions.addArguments("--headless");
-		chromeOptions.addArguments("--disable-gpu");
+		// chromeOptions.addArguments("--headless");
+		// chromeOptions.addArguments("--disable-gpu");
 	}
 
 	@AfterEach
