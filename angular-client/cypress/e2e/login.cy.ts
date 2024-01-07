@@ -15,16 +15,18 @@ describe('Login page tests', () => {
   it('Should display error message when user does not enter email', () => {
     cy.visit('/login');
     
-    elements.getEmailInput().click();
-    elements.getLoginButton().click();
+    const emailInput = elements.getEmailInput();
+    emailInput.focus();
+    emailInput.blur();
     elements.getEmailError().invoke('text').invoke('trim').should('eq', 'Username field is required');
   })
 
   it('Should display error message when user does not enter password', () => {
     cy.visit('/login');
 
-    elements.getPasswordInput().click();
-    elements.getLoginButton().click();
+    const passwordInput = elements.getPasswordInput();
+    passwordInput.focus();
+    passwordInput.blur();
     elements.getPasswordError().invoke('text').invoke('trim').should('eq', 'Password field is required');
   });
 
@@ -33,13 +35,10 @@ describe('Login page tests', () => {
     const password = '123';
     registerUser(randomEmail, password);
 
-    cy.wait(3000);
-
     elements.getEmailInput().type(randomEmail);
     elements.getPasswordInput().type(password);
     elements.getLoginButton().click();
 
-    cy.wait(3000);
     cy.url().should('not.contain', 'login');
   })
 })

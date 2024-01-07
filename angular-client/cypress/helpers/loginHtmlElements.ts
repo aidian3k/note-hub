@@ -23,7 +23,7 @@ interface LoginPageElements {
   };
 
   export const getLoginButton = (): Cypress.Chainable<JQuery<HTMLElement>> => {
-    return cy.get(loginPageElements.passwordInput);
+    return cy.get(loginPageElements.loginButton);
   };
 
   export const getEmailError = (): Cypress.Chainable<JQuery<HTMLElement>> => {
