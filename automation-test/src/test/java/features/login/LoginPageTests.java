@@ -2,17 +2,16 @@ package features.login;
 
 import automation.testing.project.features.login.LoginPage;
 import automation.testing.project.features.register.RegisterPageActController;
-import automation.testing.project.shared.tools.RandomEmailGenerator;
 import automation.testing.project.shared.domain.User;
+import automation.testing.project.shared.tools.RandomEmailGenerator;
 import features.ApplicationEndpoints;
 import features.BasicSeleniumTest;
+import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.time.LocalDate;
-import java.util.concurrent.TimeUnit;
 
 class LoginPageTests extends BasicSeleniumTest {
 

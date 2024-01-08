@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +60,12 @@ public class NoteService {
 		);
 		Root<Note> noteRoot = criteriaQuery.from(Note.class);
 		List<Predicate> predicates = new ArrayList<>();
-		predicates.add(criteriaBuilder.equal(noteRoot.get("userId"), currentUserService.getCurrentUserEmbeddedId()));
+		predicates.add(
+			criteriaBuilder.equal(
+				noteRoot.get("userId"),
+				currentUserService.getCurrentUserEmbeddedId()
+			)
+		);
 
 		if (searchWord != null) {
 			predicates.add(

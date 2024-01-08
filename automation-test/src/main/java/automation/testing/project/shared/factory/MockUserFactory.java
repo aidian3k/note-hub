@@ -1,10 +1,9 @@
 package automation.testing.project.shared.factory;
 
 import automation.testing.project.shared.domain.User;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockUserFactory {
