@@ -12,11 +12,11 @@ import project.ee.notehub.infrastructure.security.KeycloakProvider;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserRegistrationService {
+public class UserRegistrationService {
 
 	private final KeycloakProvider keycloakProvider;
 
-	int registerKeycloakUser(UserRegistrationRequest registrationRequest) {
+	public int registerKeycloakUser(UserRegistrationRequest registrationRequest) {
 		UsersResource usersResource = keycloakProvider.getRealmResource().users();
 		UserRepresentation userRepresentation = UserRegistrationMapper.createUserRepresentation(
 			registrationRequest
