@@ -14,55 +14,56 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 public abstract class AbstractBenchmark {
-  private final static Integer MEASUREMENT_ITERATIONS = 3;
-  private final static Integer WARMUP_ITERATIONS = 1;
 
-  @LocalServerPort
-  protected Integer port;
+	private static final Integer MEASUREMENT_ITERATIONS = 3;
+	private static final Integer WARMUP_ITERATIONS = 1;
 
-  static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-      "postgres:15-alpine"
-  );
+	@LocalServerPort
+	protected Integer port;
 
-  @BeforeAll
-  static void beforeAll() {
-    postgres.start();
-  }
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
+		"postgres:15-alpine"
+	);
 
-  @AfterAll
-  static void afterAll() {
-    postgres.stop();
-  }
+	@BeforeAll
+	static void beforeAll() {
+		postgres.start();
+	}
 
-  @DynamicPropertySource
-  static void configureProperties(DynamicPropertyRegistry registry) {
-    registry.add("spring.datasource.url", postgres::getJdbcUrl);
-    registry.add("spring.datasource.username", postgres::getUsername);
-    registry.add("spring.datasource.password", postgres::getPassword);
-  }
+	@AfterAll
+	static void afterAll() {
+		postgres.stop();
+	}
 
-  /**
-   * Any benchmark, by extending this class, inherits this single @Test method for JUnit to run.
-   */
-  @Test
-  public void executeJmhRunner() throws RunnerException {
-    Options jmhRunnerOptions = new OptionsBuilder()
-        // set the class name regex for benchmarks to search for to the current class
-        .include("\\." + this.getClass().getSimpleName() + "\\.")
-        .warmupIterations(WARMUP_ITERATIONS)
-        .measurementIterations(MEASUREMENT_ITERATIONS)
-        // do not use forking or the benchmark methods will not see references stored within its class
-        .forks(0)
-        // do not use multiple threads
-        .threads(1)
-        .shouldDoGC(true)
-        .shouldFailOnError(true)
-        .resultFormat(ResultFormatType.JSON)
-        .result("/dev/null") // set this to a valid filename if you want reports
-        .shouldFailOnError(true)
-        .jvmArgs("-server")
-        .build();
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgres::getJdbcUrl);
+		registry.add("spring.datasource.username", postgres::getUsername);
+		registry.add("spring.datasource.password", postgres::getPassword);
+	}
 
-    new Runner(jmhRunnerOptions).run();
-  }
+	/**
+	 * Any benchmark, by extending this class, inherits this single @Test method for JUnit to run.
+	 */
+	@Test
+	public void executeJmhRunner() throws RunnerException {
+		Options jmhRunnerOptions = new OptionsBuilder()
+			// set the class name regex for benchmarks to search for to the current class
+			.include("\\." + this.getClass().getSimpleName() + "\\.")
+			.warmupIterations(WARMUP_ITERATIONS)
+			.measurementIterations(MEASUREMENT_ITERATIONS)
+			// do not use forking or the benchmark methods will not see references stored within its class
+			.forks(0)
+			// do not use multiple threads
+			.threads(1)
+			.shouldDoGC(true)
+			.shouldFailOnError(true)
+			.resultFormat(ResultFormatType.JSON)
+			.result("/dev/null") // set this to a valid filename if you want reports
+			.shouldFailOnError(true)
+			.jvmArgs("-server")
+			.build();
+
+		new Runner(jmhRunnerOptions).run();
+	}
 }
