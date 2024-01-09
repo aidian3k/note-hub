@@ -10,7 +10,7 @@ import project.ee.notehub.domain.user.dto.UserLoginResponse;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserLoginService {
+public class UserLoginService {
 
 	private final KeycloakLoginConnector keycloakLoginConnector;
 

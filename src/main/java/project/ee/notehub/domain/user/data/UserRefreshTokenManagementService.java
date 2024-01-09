@@ -7,11 +7,11 @@ import project.ee.notehub.domain.user.dto.UserLoginResponse;
 
 @Service
 @RequiredArgsConstructor
-class UserRefreshTokenManagementService {
+public class UserRefreshTokenManagementService {
 
 	private final KeycloakRefreshConnector keycloakRefreshConnector;
 
-	UserLoginResponse handleRefreshToken(String refreshToken) {
+	public UserLoginResponse handleRefreshToken(String refreshToken) {
 		return this.keycloakRefreshConnector.handleRefreshToken(
 				KeycloakRefreshTokenRequest
 					.builder()
