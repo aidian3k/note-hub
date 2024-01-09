@@ -1,5 +1,6 @@
 package project.ee.notehub.application;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,6 @@ import project.ee.notehub.domain.note.dto.NoteDTO;
 import project.ee.notehub.domain.note.dto.UpdateNoteDTO;
 import project.ee.notehub.domain.note.entity.Note;
 import project.ee.notehub.domain.note.facade.NoteFacade;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

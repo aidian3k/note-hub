@@ -1,9 +1,8 @@
 package automation.testing.project.shared.tools;
 
+import java.util.Random;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.Random;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RandomEmailGenerator {

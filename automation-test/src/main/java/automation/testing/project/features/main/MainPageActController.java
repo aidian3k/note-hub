@@ -2,10 +2,9 @@ package automation.testing.project.features.main;
 
 import automation.testing.project.shared.domain.Note;
 import automation.testing.project.shared.tools.WebDriverTools;
+import java.util.stream.IntStream;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-
-import java.util.stream.IntStream;
 
 public class MainPageActController {
 
@@ -120,8 +119,10 @@ public class MainPageActController {
 		return MainPage.getMainPage(webDriver);
 	}
 
-	public MainPageActController createMultipleNotes(Note noteToSearch, int numberOfNotes) {
-
+	public MainPageActController createMultipleNotes(
+		Note noteToSearch,
+		int numberOfNotes
+	) {
 		IntStream
 			.range(0, numberOfNotes)
 			.forEach(element -> {

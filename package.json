@@ -6,6 +6,7 @@
     "format": "npx prettier --write {**/*,*}.{ts,java,js,html,json}"
   },
   "devDependencies": {
+    "cypress": "^13.6.2",
     "java-parser": "~2.0.4",
     "prettier": "~2.8.7",
     "prettier-plugin-java": "^1.6.2"

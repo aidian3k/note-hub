@@ -34,9 +34,9 @@ class SecurityConfiguration {
 		});
 
 		httpSecurity.oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> {
-				httpSecurityOAuth2ResourceServerConfigurer
-					.jwt(jwtCustomizer ->
-							jwtCustomizer.jwtAuthenticationConverter(jwtAuthenticationConverter));
+				httpSecurityOAuth2ResourceServerConfigurer.jwt(jwtCustomizer ->
+					jwtCustomizer.jwtAuthenticationConverter(jwtAuthenticationConverter)
+				);
 			}
 		);
 
@@ -52,7 +52,7 @@ class SecurityConfiguration {
 	@Bean
 	@Profile("test")
 	public SecurityFilterChain configureProjectSecurityTest(
-			HttpSecurity httpSecurity
+		HttpSecurity httpSecurity
 	) throws Exception {
 		httpSecurity.csrf(AbstractHttpConfigurer::disable);
 		httpSecurity.cors(Customizer.withDefaults());

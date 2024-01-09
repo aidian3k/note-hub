@@ -1,16 +1,15 @@
 package automation.testing.project.features.main;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import automation.testing.project.shared.domain.Note;
 import automation.testing.project.shared.domain.User;
 import automation.testing.project.shared.tools.WebDriverTools;
+import java.util.List;
+import java.util.Set;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MainPageVerifyController {
 

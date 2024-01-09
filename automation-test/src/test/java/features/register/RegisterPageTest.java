@@ -1,17 +1,16 @@
 package features.register;
 
 import automation.testing.project.features.register.RegisterPage;
+import automation.testing.project.shared.domain.User;
 import automation.testing.project.shared.factory.MockUserFactory;
 import automation.testing.project.shared.tools.RandomEmailGenerator;
-import automation.testing.project.shared.domain.User;
 import features.ApplicationEndpoints;
 import features.BasicSeleniumTest;
+import java.time.LocalDate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.time.LocalDate;
 
 class RegisterPageTest extends BasicSeleniumTest {
 
